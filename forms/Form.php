@@ -65,6 +65,8 @@ class Form extends RequestHandler {
 	protected $validator;
 	
 	protected $formMethod = "post";
+
+	protected $strictFormMethodCheck = false;
 	
 	protected static $current_action;
 	
@@ -239,7 +241,20 @@ class Form extends RequestHandler {
 	 * if the form is valid.
 	 */
 	public function httpSubmission($request) {
-		$vars = $request->requestVars();
+		// Strict method check
+		if($this->strictFormMethodCheck) {
+			// Throws a 400 error if the method is bad...
+			if($this->formMethod != strtolower($request->httpMethod())) {
+				$this->httpError(400, _t("Form.BAD_METHOD", "This form requires a ".$this->formMethod." submission"));
+			}
+
+			// ...and only uses the vairables corresponding to that method type
+			$vars = $this->formMethod == 'get' ? $request->getVars() : $request->postVars();
+
+		} else {
+			$vars = $request->requestVars();
+		}
+
 		if(isset($funcName)) {
 			Form::set_current_action($funcName);
 		}
@@ -794,9 +809,26 @@ class Form extends RequestHandler {
 	 * Set the form method: GET, POST, PUT, DELETE.
 	 * 
 	 * @param $method string
+	 * @param $strict If non-null, pass value to {@link setStrictFormMethodCheck()}.
 	 */
-	public function setFormMethod($method) {
+	public function setFormMethod($method, $strict = null) {
 		$this->formMethod = strtolower($method);
+		if($strict !== null) $this->setStrictFormMethodCheck($strict);
+		return $this;
+	}
+
+	/**
+	 * If set to true, enforce the matching of the form method.
+	 *
+	 * This will mean two things:
+	 *  - Get vars will be ignored by a post form, and vice versa
+	 *  - A submission where the HTTP method used doesn't match the form will return a 400 error.
+	 *
+	 * If set to false (the default), then the form method is only used to construct the default
+	 * form.
+	 */
+	public function setStrictFormMethodCheck($strictFormMethodCheck) {
+		$this->strictFormMethodCheck = (bool)$strictFormMethodCheck;
 		return $this;
 	}
 	
