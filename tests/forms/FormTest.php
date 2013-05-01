@@ -395,6 +395,43 @@ class FormTest extends FunctionalTest {
 		$this->assertNotContains('two="2"', $form->getAttributesHTML('one', 'two'));
 		$this->assertContains('three="3"', $form->getAttributesHTML('one', 'two'));
 	}
+
+	public function checkStrictMethodMatching() {
+		$postRequestGetVar = new SS_HTTPRequest('post', '', array('key1' => 'getvar'));
+		$postRequestPostVar = new SS_HTTPRequest('post', '', null, array('key1' => 'postvar'));
+		$getRequestGetVar = new SS_HTTPRequest('get', '', array('key1' => 'getvar'));
+		$getRequestPostVar = new SS_HTTPRequest('get', '', null, array('key1' => 'postvar'));
+
+		// Test strict GET form
+		$form = $this->getStubForm();
+		$form->setFormMethod('get', true);
+
+		// Fails with a post request
+		$this->assertEquals(400, $form->httpSubmission($postRequestGetVar)->getStatusCode());
+		// 404s on our stub form, but doesn't 400
+		$this->assertEquals(404, $form->httpSubmission($getRequestPostVar)->getStatusCode());
+		// Field value not populated
+		$this->assertNull($form->fieldByName('key1')->getValue());
+		// 404s again
+		$this->assertEquals(404, $form->httpSubmission($getRequestGetVar)->getStatusCode());
+		// This time the field is populated
+		$this->assertEquals('getvar', $form->fieldByName('key1')->getValue());
+
+		// Test strict POST form
+		$form = $this->getStubForm();
+		$form->setFormMethod('post', true);
+
+		// Fails with a get request
+		$this->assertEquals(400, $form->httpSubmission($getRequestPostVar)->getStatusCode());
+		// 404s on our stub form, but doesn't 400
+		$this->assertEquals(404, $form->httpSubmission($postRequestGetVar)->getStatusCode());
+		// Field value not populated
+		$this->assertNull($form->fieldByName('key1')->getValue());
+		// 404s again
+		$this->assertEquals(404, $form->httpSubmission($postRequestPostVar)->getStatusCode());
+		// This time the field is populated
+		$this->assertEquals('postvar', $form->fieldByName('key1')->getValue());
+	}
 	
 	protected function getStubForm() {
 		return new Form(
