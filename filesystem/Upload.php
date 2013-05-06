@@ -87,6 +87,13 @@ class Upload extends Controller {
 	}
 	
 	/**
+	 * Index should never be used, return a 404.
+	 */
+	public function index() {
+		return $this->httpError(404, 'Page not found.');
+	}
+
+	/**
 	 * Save an file passed from a form post into this object.
 	 * File names are filtered through {@link FileNameFilter}, see class documentation
 	 * on how to influence this behaviour.
