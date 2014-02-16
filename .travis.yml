@@ -22,8 +22,12 @@ matrix:
       env: DB=MYSQL CORE_RELEASE=master
     - php: 5.5
       env: DB=MYSQL CORE_RELEASE=master
+    - php: hhvm
+      env: DB=MYSQL CORE_RELEASE=master
     - php: 5.4
       env: DB=MYSQL CORE_RELEASE=master BEHAT_TEST=1
+  allow_failures:
+    - php: hhvm
 
 before_script:
  - composer self-update
