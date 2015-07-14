@@ -8,6 +8,13 @@ two things:
  * Which milestone an issue or pull request is marked with.
  * Which branch a pull request is merged into.
 
+In short, the answer is this:
+
+ * Most changes should be applied to the default branch in GitHub.
+ * Low-risk bugfixes should be applied to the stable minor branch (e.g. the `3.1` branch).
+ * API changes and high-risk changes should always go against the `master` branch.
+ * Security fixes should be emailed to [security@silverstripe.com](mailto:security@silverstripe.com) instead.
+
 This guide is written for by anyone contributing a change. It is also the official guide for our core committers
 when reviewing pull requests and triaging issues.
 

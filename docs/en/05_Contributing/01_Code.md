@@ -21,7 +21,14 @@ We ask for this so that the ownership in the license is clear and unambiguous, a
 
 Before you begin, you should determine which release branch your change should be submitted to. In order to ensure safe and predictable upgrades for SilverStripe users, we have guidelines about the kinds of change can go into each branch.
 
-To answer this, please see our guide on [choosing the right branch for your change](branch_selection).
+In short, the answer is this:
+
+ * Most changes should be applied to the default branch in GitHub.
+ * Low-risk bugfixes should be applied to the stable minor branch (e.g. the `3.1` branch).
+ * API changes and high-risk changes should always go against the `master` branch.
+ * Security fixes should be emailed to [security@silverstripe.com](mailto:security@silverstripe.com) instead.
+
+For more information, please see our guide on [choosing the right branch for your change](branch_selection).
 
 ## Step-by-step: From forking to sending the pull request
 
