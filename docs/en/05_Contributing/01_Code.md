@@ -17,6 +17,12 @@ Note: By supplying code to the SilverStripe core team in patches, tickets and pu
 We ask for this so that the ownership in the license is clear and unambiguous, and so that community involvement doesn't stop us from being able to continue supporting these projects.  By releasing this code under a permissive license, this copyright assignment won't prevent you from using the code in any way you see fit.
 </div>
 
+## Which branch should I contribute my code to?
+
+Before you begin, you should determine which release branch your change should be submitted to. In order to ensure safe and predictable upgrades for SilverStripe users, we have guidelines about the kinds of change can go into each branch.
+
+To answer this, please see our guide on [choosing the right branch for your change](branch_selection).
+
 ## Step-by-step: From forking to sending the pull request
 
 <div class="notice" markdown='1'>
@@ -25,7 +31,7 @@ We ask for this so that the ownership in the license is clear and unambiguous, a
 
 1. Install the project through composer. The process is described in detail in "[Installation through Composer](../getting_started/composer#contributing)".
 
-		composer create-project --keep-vcs --dev silverstripe/installer ./my/website/folder 3.1.x-dev
+		composer create-project --keep-vcs --dev silverstripe/installer ./my/website/folder 3.x-dev
 
 2. Edit the `composer.json`. Remove any `@stable` markers from the core modules in there. 
    Add your fork URLs, in this example a fork of the `cms` module on the `sminnee` github account 

@@ -23,11 +23,14 @@ Releases of the *cms* and *framework* modules are coupled at the moment, they fo
 
 ## Release Numbering
 
-SilverStripe follows [Semantic Versioning](http://semver.org).
+SilverStripe follows [Semantic Versioning](http://semver.org/) (a.k.a. SemVer) as closely as possible. However,
+we have a few other considerations we factor in when deciding which changes to include in a given release.
 
-Note: Until November 2014, the project didn't adhere to Semantic Versioning. Instead. a "minor release" in semver terminology
-was treated as a "major release" in SilverStripe. For example, the *3.1.0* release contained API breaking changes, and
-the *3.1.1* release contained new features rather than just bugfixes.
+For more more information about our approach, please see our guide to [choosing the right branch for your change](branch_selection).
+
+Note: Until November 2014, the project didn't adhere to Semantic Versioning. Instead. a "minor release" in semver
+terminology was treated as a "major release" in SilverStripe. For example, the *3.1.0* release contained API
+breaking changes, and the *3.1.1* release contained new features rather than just bugfixes.
 
 ## Supported versions
 
