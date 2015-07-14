@@ -87,8 +87,9 @@ In the following, we use *API breakages* as shorthand for "backwards incompatibl
  * Changes should be forward-merged or otherwise applied into the *Upcoming Minor Branch* (if it exists), the *Major Branch*, and the *Master Branch*.
  * Sometimes a more elegant but backwards-incompatible fix may be written separately for the master branch.
 
-
-**IMPORTANT:** If you are looking to submit a pull request for such as issue, please stop and email [security@silverstripe.com](mailto:security@silverstripe.com) instead. We don't like disclosing issues publicly until after a patch release is available.
+<div class="notice" markdown='1'>
+**Note:** If you are looking to submit a pull request for such as issue, please stop and email [security@silverstripe.com](mailto:security@silverstripe.com) instead. We don't like disclosing issues publicly until after a patch release is available.
+</div>
 
 ### Other security issues
 
