@@ -1,4 +1,7 @@
 <?php
+
+use SilverStripe\Model\FieldType\PolymorphicForeignKey;
+
 /**
  * A single database record & abstract class for the data-access-model.
  *

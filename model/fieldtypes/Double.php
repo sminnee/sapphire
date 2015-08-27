@@ -1,6 +1,8 @@
 <?php
 
-use SilverStripe\Model\FieldType\DBFloat;
+namespace SilverStripe\Model\FieldType;
+
+use DB;
 
 /**
  *

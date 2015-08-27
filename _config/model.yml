@@ -3,3 +3,11 @@ Injector:
     class: SilverStripe\Model\FieldType\DBInt
   Float:
     class: SilverStripe\Model\FieldType\DBFloat
+  Double:
+    class: SilverStripe\Model\FieldType\Double
+  PrimaryKey:
+    class: SilverStripe\Model\FieldType\PrimaryKey
+  ForeignKey:
+    class: SilverStripe\Model\FieldType\ForeignKey
+  PolymorphicForeignKey:
+    class: SilverStripe\Model\FieldType\PolymorphicForeignKey

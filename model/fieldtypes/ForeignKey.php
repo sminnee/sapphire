@@ -1,6 +1,14 @@
 <?php
 
-use SilverStripe\Model\FieldType\DBInt;
+namespace SilverStripe\Model\FieldType;
+
+use DB;
+use DataList;
+use UploadField;
+use DropdownField;
+use NumericField;
+
+
 
 /**
  * A special type Int field used for foreign keys in has_one relationships.

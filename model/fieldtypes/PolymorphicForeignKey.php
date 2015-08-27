@@ -1,5 +1,11 @@
 <?php
 
+namespace SilverStripe\Model\FieldType;
+
+use DB;
+use ClassInfo;
+use CompositeDBField;
+
 /**
  * A special ForeignKey class that handles relations with arbitrary class types
  *

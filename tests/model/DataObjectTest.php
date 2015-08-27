@@ -315,7 +315,7 @@ class DataObjectTest extends SapphireTest {
 		// check behaviour of dbObject with polymorphic relations
 		$favouriteDBObject = $fan1->dbObject('Favourite');
 		$favouriteValue = $favouriteDBObject->getValue();
-		$this->assertInstanceOf('PolymorphicForeignKey', $favouriteDBObject);
+		$this->assertInstanceOf('SilverStripe\\Model\\FieldType\\PolymorphicForeignKey', $favouriteDBObject);
 		$this->assertEquals($favourite->ID, $favouriteValue->ID);
 		$this->assertEquals($favourite->ClassName, $favouriteValue->ClassName);
 	}
