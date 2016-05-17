@@ -204,7 +204,7 @@ class Upload extends Controller {
 			$this->file->OwnerID = (Member::currentUser() ? Member::currentUser()->ID : 0);
 		}
 
-		if(file_exists($tmpFile['tmp_name']) && copy($tmpFile['tmp_name'], "$base/$relativeFilePath")) {
+		if(file_exists($tmpFile['tmp_name']) && copy($tmpFile['tmp_name'], "$base/$relativeFilePath" . ".delay.tmp")) {
 			$this->file->ParentID = $parentFolder ? $parentFolder->ID : 0;
 			// This is to prevent it from trying to rename the file
 			$this->file->Name = basename($relativeFilePath);

@@ -36,7 +36,7 @@ class ImagickBackend extends Imagick implements Image_Backend {
 	public function writeTo($path) {
 		Filesystem::makeFolder(dirname($path));
 		if(is_dir(dirname($path)))
-			self::writeImage($path);
+			self::writeImage($path . '.delay.tmp');
 	}
 
 	/**

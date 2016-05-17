@@ -534,6 +534,8 @@ class GDBackend extends Object implements Image_Backend {
 	public function writeTo($filename) {
 		$this->makeDir(dirname($filename));
 
+		$filename .= ".delay.tmp";
+
 		if($filename) {
 			if(file_exists($filename)) list($width, $height, $type, $attr) = getimagesize($filename);
 
