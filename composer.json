@@ -24,7 +24,11 @@
     "embed/embed": "^2.6"
   },
   "require-dev": {
-    "phpunit/PHPUnit": "~4.8"
+    "phpunit/PHPUnit": "~4.8",
+    "silverstripe/behat-extension": "dev-master",
+    "silverstripe/serve": "dev-master",
+    "silverstripe/testsession": "dev-master",
+    "se/selenium-server-standalone": "2.41.0"
   },
   "extra": {
     "branch-alias": {
