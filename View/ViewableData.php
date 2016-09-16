@@ -86,7 +86,16 @@ class ViewableData extends Object implements IteratorAggregate {
 	 * @return bool
 	 */
 	public function __isset($property) {
-		return $this->hasField($property) || ($this->failover && $this->failover->hasField($property));
+	    if($this->hasMethod($method = "get$property")) {
+	        return $this->$method() !== null;
+	    }
+	    if($this->hasField($property)) {
+	        return $this->getField($property) !== null;
+	    }
+	    if($this->failover) {
+	        return $this->failover->__isset($property);
+	    }
+	    return false;
 	}
 
 	/**
