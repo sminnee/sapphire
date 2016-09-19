@@ -5,5 +5,8 @@
   },
   "rules": {
     "init-declarations": 1
+  },
+ "settings": {
+    "import/resolver": "webpack"
   }
 }
