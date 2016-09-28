@@ -30,11 +30,11 @@ class FormTransformation extends Object {
 
 		$transNames = array_reverse(array_map(
 			function($name) { return ClassInfo::shortName($name); },
-			array_values(ClassInfo::ancestry($this->class))
+			array_values(ClassInfo::ancestry(static::class))
 		));
 		$fieldClasses = array_reverse(array_map(
 			function($name) { return ClassInfo::shortName($name); },
-			array_values(ClassInfo::ancestry($field->class))
+			array_values(ClassInfo::ancestry(get_class($field)))
 		));
 
 		$len = max(sizeof($transNames), sizeof($fieldClasses));
@@ -43,7 +43,6 @@ class FormTransformation extends Object {
 			if(!empty($transNames[$i])) {
 				$funcName = 'perform' . $transNames[$i];
 				if($field->hasMethod($funcName)) {
-					//echo "<li>$field->class used $funcName";
 					return $field->$funcName($this);
 				}
 			}
@@ -52,13 +51,13 @@ class FormTransformation extends Object {
 			if(!empty($fieldClasses[$i])) {
 				$funcName = 'transform' . $fieldClasses[$i];
 				if($this->hasMethod($funcName)) {
-					//echo "<li>$field->class used $funcName";
 					return $this->$funcName($field);
 				}
 			}
 		}
 
-		throw new \BadMethodCallException("FormTransformation:: Can't perform '$this->class' on '$field->class'");
+		throw new \BadMethodCallException("FormTransformation:: Can't perform '" . static::class . "' on '" .
+			get_class($field) . "'");
 	}
 }
 

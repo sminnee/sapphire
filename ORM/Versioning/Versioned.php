@@ -171,7 +171,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 	 *
 	 * or programatically:
 	 *
-	 *  Config::inst()->update($this->owner->class, 'versionableExtensions',
+	 *  Config::inst()->update(get_class($this->owner), 'versionableExtensions',
 	 *  array('Extension1' => 'suffix1', 'Extension2' => array('suffix2', 'suffix3')));
 	 *
 	 *
@@ -606,10 +606,11 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 				$suffixTable = $classTable;
 			}
 
-			$fields = DataObject::database_fields($owner->class);
+			$fields = DataObject::database_fields(get_class($owner));
 			unset($fields['ID']);
+
 			if($fields) {
-				$options = Config::inst()->get($owner->class, 'create_table_options', Config::FIRST_SET);
+				$options = Config::inst()->get(get_class($owner), 'create_table_options', Config::FIRST_SET);
 				$indexes = $owner->databaseIndexes();
 				$extensionClass = $allSuffixes[$suffix];
 				if ($suffix && ($extension = $owner->getExtensionInstance($extensionClass))) {
@@ -1090,7 +1091,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 					"Invalid %s config value \"%s\" on object on class \"%s\"",
 					$source,
 					$relationship,
-					$owner->class
+					get_class($owner)
 				), E_USER_WARNING);
 				continue;
 			}
@@ -1132,7 +1133,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 		/** @var Versioned|DataObject $item */
 		foreach($items as $item) {
 			// Identify item
-			$itemKey = $item->class . '/' . $item->ID;
+			$itemKey = get_class($item) . '/' . $item->ID;
 
 			// Skip unsaved, unversioned, or already checked objects
 			if(!$item->isInDB() || !$item->has_extension('SilverStripe\ORM\Versioning\Versioned') || isset($list[$itemKey])) {
@@ -1342,7 +1343,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 
 		// If we weren't definitely loaded from live, and we can't view non-live content, we need to
 		// check to make sure this version is the live version and so can be viewed
-		$latestVersion = Versioned::get_versionnumber_by_stage($owner->class, static::LIVE, $owner->ID);
+		$latestVersion = Versioned::get_versionnumber_by_stage(get_class($owner), static::LIVE, $owner->ID);
 		if ($latestVersion == $owner->Version) {
 			// Even if this is loaded from a non-live stage, this is the live version
 			return true;
@@ -1355,7 +1356,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 		}
 
 		// Fall back to default permission check
-		$permissions = Config::inst()->get($owner->class, 'non_live_permissions', Config::FIRST_SET);
+		$permissions = Config::inst()->get(get_class($owner), 'non_live_permissions', Config::FIRST_SET);
 		$check = Permission::checkMember($member, $permissions);
 		return (bool)$check;
 	}
@@ -1378,7 +1379,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 		Versioned::set_stage($stage);
 
 		$owner = $this->owner;
-		$versionFromStage = DataObject::get($owner->class)->byID($owner->ID);
+		$versionFromStage = DataObject::get(get_class($owner))->byID($owner->ID);
 
 		Versioned::set_reading_mode($oldMode);
 		return $versionFromStage ? $versionFromStage->canView($member) : false;
@@ -1875,8 +1876,8 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 	 */
 	public function compareVersions($from, $to) {
 		$owner = $this->owner;
-		$fromRecord = Versioned::get_version($owner->class, $owner->ID, $from);
-		$toRecord = Versioned::get_version($owner->class, $owner->ID, $to);
+		$fromRecord = Versioned::get_version(get_class($owner), $owner->ID, $from);
+		$toRecord = Versioned::get_version(get_class($owner), $owner->ID, $to);
 
 		$diff = new DataDifferencer($fromRecord, $toRecord);
 
@@ -2282,7 +2283,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 			return false;
 		}
 
-		$version = static::get_latest_version($owner->class, $owner->ID);
+		$version = static::get_latest_version(get_class($owner), $owner->ID);
 		return ($version->Version == $owner->Version);
 	}
 

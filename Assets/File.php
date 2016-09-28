@@ -592,7 +592,7 @@ class File extends DataObject implements ShortcodeHandler, AssetContainer, Thumb
 
 		// Set default name
 		if(!$this->getField('Name')) {
-			$this->Name ="new-" . strtolower($this->class);
+			$this->Name ="new-" . strtolower(static::class);
 	}
 
 		// Propegate changes to the AssetStore and update the DBFile field

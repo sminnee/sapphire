@@ -374,8 +374,8 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		if(!$record) {
 			$record = array(
 				'ID' => 0,
-				'ClassName' => get_class($this),
-				'RecordClassName' => get_class($this)
+				'ClassName' => static::class,
+				'RecordClassName' => static::class
 			);
 		}
 
@@ -410,7 +410,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 
 		// Identify fields that should be lazy loaded, but only on existing records
 		if(!empty($record['ID'])) {
-			$currentObj = get_class($this);
+			$currentObj = static::class;
 			while($currentObj != 'SilverStripe\ORM\DataObject') {
 				$fields = self::custom_database_fields($currentObj);
 				foreach($fields as $field => $type) {
@@ -471,7 +471,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	public function duplicate($doWrite = true) {
 		/** @var static $clone */
-		$clone = Injector::inst()->create(get_class($this), $this->toMap(), false, $this->model );
+		$clone = Injector::inst()->create(static::class, $this->toMap(), false, $this->model );
 		$clone->ID = 0;
 
 		$clone->invokeWithExtensions('onBeforeDuplicate', $this, $doWrite);
@@ -556,7 +556,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	public function getClassName() {
 		$className = $this->getField("ClassName");
 		if (!ClassInfo::exists($className)) {
-			return get_class($this);
+			return static::class;
 		}
 		return $className;
 	}
@@ -577,7 +577,6 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			return $this;
 		}
 
-		$this->class = $className;
 		$this->setField("ClassName", $className);
 		$this->setField('RecordClassName', $className);
 		return $this;
@@ -637,8 +636,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					. " parent::__construct()", E_USER_ERROR);
 			}
 		}
-
-		if($this->class == 'SilverStripe\ORM\DataObject') return;
+		if(static::class == 'SilverStripe\ORM\DataObject') return;
 
 		// Set up accessors for joined items
 		if($manyMany = $this->manyMany()) {
@@ -738,7 +736,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * same as singular_name() but runs it through the translating function
 	 *
 	 * Translating string is in the form:
-	 *     $this->class.SINGULARNAME
+	 *     static::class.SINGULARNAME
 	 * Example:
 	 *     Page.SINGULARNAME
 	 *
@@ -774,7 +772,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * Get the translated user friendly plural name of this DataObject
 	 * Same as plural_name but runs it through the translation function
 	 * Translation string is in the form:
-	 *      $this->class.PLURALNAME
+	 *      static::class.PLURALNAME
 	 * Example:
 	 *      Page.PLURALNAME
 	 *
@@ -896,7 +894,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					$this->$relatedFieldName = $relObj->ID;
 					$relObj->flushCache();
 				} else {
-					user_error("Couldn't follow dot syntax '$k' on '$this->class' object", E_USER_WARNING);
+					user_error("Couldn't follow dot syntax '$k' on '" . static::class . "' object", E_USER_WARNING);
 				}
 			} else {
 				$this->$k = $v;
@@ -1136,7 +1134,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			$defaults = Config::inst()->get($class, 'defaults', Config::UNINHERITED);
 
 			if($defaults && !is_array($defaults)) {
-				user_error("Bad '$this->class' defaults given: " . var_export($defaults, true),
+				user_error("Bad '"  .static::class . "' defaults given: " . var_export($defaults, true),
 					E_USER_WARNING);
 				$defaults = null;
 			}
@@ -1206,7 +1204,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		$this->brokenOnWrite = true;
 		$this->onBeforeWrite();
 		if($this->brokenOnWrite) {
-			user_error("$this->class has a broken onBeforeWrite() function."
+			user_error(static::class . " has a broken onBeforeWrite() function."
 				. " Make sure that you call parent::onBeforeWrite().", E_USER_ERROR);
 		}
 	}
@@ -1274,7 +1272,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					= empty($this->record['Created'])
 						? $now
 						: $this->record['Created'];
-				$manipulation[$table]['fields']['ClassName'] = $this->class;
+				$manipulation[$table]['fields']['ClassName'] = static::class;
 			}
 		}
 
@@ -1442,7 +1440,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		$this->brokenOnDelete = true;
 		$this->onBeforeDelete();
 		if($this->brokenOnDelete) {
-			user_error("$this->class has a broken onBeforeDelete() function."
+			user_error(static::class . " has a broken onBeforeDelete() function."
 				. " Make sure that you call parent::onBeforeDelete().", E_USER_ERROR);
 		}
 
@@ -1453,7 +1451,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		//  - move the details of the delete code in the DataQuery system
 		//  - update the code to just delete the base table, and rely on cascading deletes in the DB to do the rest
 		//    obviously, that means getting requireTable() to configure cascading deletes ;-)
-		$srcQuery = DataList::create($this->class, $this->model)->where("ID = $this->ID")->dataQuery()->query();
+		$srcQuery = DataList::create(static::class, $this->model)->where("ID = $this->ID")->dataQuery()->query();
 		foreach($srcQuery->queriedTables() as $table) {
 			$delete = new SQLDelete("\"$table\"", array('"ID"' => $this->ID));
 			$delete->execute();
@@ -1491,7 +1489,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return array Class ancestry
 	 */
 	public function getClassAncestry() {
-		return ClassInfo::ancestry(get_class($this));
+		return ClassInfo::ancestry(static::class);
 	}
 
 	/**
@@ -1538,7 +1536,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 				if($polymorphic) {
 					$filter = array(
 						"{$joinField}ID" => $joinID,
-						"{$joinField}Class" => $this->class
+						"{$joinField}Class" => static::class
 					);
 				} else {
 					$filter = array(
@@ -1557,7 +1555,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 				$component = $this->model->$class->newObject();
 				if($polymorphic) {
 					$component->{$joinField.'ID'} = $this->ID;
-					$component->{$joinField.'Class'} = $this->class;
+					$component->{$joinField.'Class'} = static::class;
 				} else {
 					$component->$joinField = $this->ID;
 				}
@@ -1586,7 +1584,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			throw new InvalidArgumentException(sprintf(
 				"DataObject::getComponents(): Unknown 1-to-many component '%s' on class '%s'",
 				$componentName,
-				$this->class
+				static::class
 			));
 		}
 
@@ -1594,7 +1592,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		if(!$this->ID) {
 			if(!isset($this->unsavedRelations[$componentName])) {
 				$this->unsavedRelations[$componentName] =
-					new UnsavedRelationList($this->class, $componentName, $componentClass);
+					new UnsavedRelationList(static::class, $componentName, $componentClass);
 			}
 			return $this->unsavedRelations[$componentName];
 		}
@@ -1603,7 +1601,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		$joinField = $this->getRemoteJoinField($componentName, 'has_many', $polymorphic);
 		/** @var HasManyList $result */
 		if($polymorphic) {
-			$result = PolymorphicHasManyList::create($componentClass, $joinField, $this->class);
+			$result = PolymorphicHasManyList::create($componentClass, $joinField, static::class);
 		} else {
 			$result = HasManyList::create($componentClass, $joinField);
 		}
@@ -1626,11 +1624,11 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	public function getRelationClass($relationName) {
 		// Go through all relationship configuration fields.
 		$candidates = array_merge(
-			($relations = Config::inst()->get($this->class, 'has_one')) ? $relations : array(),
-			($relations = Config::inst()->get($this->class, 'has_many')) ? $relations : array(),
-			($relations = Config::inst()->get($this->class, 'many_many')) ? $relations : array(),
-			($relations = Config::inst()->get($this->class, 'belongs_many_many')) ? $relations : array(),
-			($relations = Config::inst()->get($this->class, 'belongs_to')) ? $relations : array()
+			($relations = Config::inst()->get(static::class, 'has_one')) ? $relations : array(),
+			($relations = Config::inst()->get(static::class, 'has_many')) ? $relations : array(),
+			($relations = Config::inst()->get(static::class, 'many_many')) ? $relations : array(),
+			($relations = Config::inst()->get(static::class, 'belongs_many_many')) ? $relations : array(),
+			($relations = Config::inst()->get(static::class, 'belongs_to')) ? $relations : array()
 		);
 
 		if (isset($candidates[$relationName])) {
@@ -1657,7 +1655,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	public function getRelationType($component) {
 		$types = array('has_one', 'has_many', 'many_many', 'belongs_many_many', 'belongs_to');
 		foreach($types as $type) {
-			$relations = Config::inst()->get($this->class, $type);
+			$relations = Config::inst()->get(static::class, $type);
 			if($relations && isset($relations[$component])) {
 				return $type;
 			}
@@ -1710,7 +1708,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		if(!is_a($this, $class, true)) {
 			throw new InvalidArgumentException(sprintf(
 				"Relation %s on %s does not refer to objects of type %s",
-				$remoteRelation, $remoteClass, get_class($this)
+				$remoteRelation, $remoteClass, static::class
 			));
 		}
 
@@ -1802,11 +1800,11 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		}
 
 		if(empty($remoteClass)) {
-			throw new Exception("Unknown $type component '$component' on class '$this->class'");
+			throw new Exception("Unknown $type component '$component' on class '" . static::class . "'");
 		}
 		if(!ClassInfo::exists(strtok($remoteClass, '.'))) {
 			throw new Exception(
-				"Class '$remoteClass' not found, but used in $type component '$component' on class '$this->class'"
+				"Class '$remoteClass' not found, but used in $type component '$component' on class '" . static::class . "'"
 			);
 		}
 
@@ -1838,7 +1836,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			$message = "No has_one found on class '$remoteClass'";
 			if($type == 'has_many') {
 				// include a hint for has_many that is missing a has_one
-				$message .= ", the has_many relation from '$this->class' to '$remoteClass'";
+				$message .= ", the has_many relation from '" . static::class . "' to '$remoteClass'";
 				$message .= " requires a has_one on '$remoteClass'";
 			}
 			throw new Exception($message);
@@ -1848,7 +1846,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		if(empty($remoteRelations[$remoteField])) {
 			throw new Exception("Missing expected has_one named '$remoteField'
 				on class '$remoteClass' referenced by $type named '$component'
-				on class {$this->class}"
+				on class " . static::class
 			);
 		}
 
@@ -1873,7 +1871,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			throw new InvalidArgumentException(sprintf(
 				"DataObject::getComponents(): Unknown many-to-many component '%s' on class '%s'",
 				$componentName,
-				$this->class
+				static::class
 			));
 		}
 
@@ -1920,7 +1918,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * 							their classes.
 	 */
 	public function hasOne() {
-		return (array)Config::inst()->get($this->class, 'has_one', Config::INHERITED);
+		return (array)Config::inst()->get(static::class, 'has_one', Config::INHERITED);
 	}
 
 	/**
@@ -1959,7 +1957,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			return $this->belongsToComponent($component, $classOnly);
 		}
 
-		$belongsTo = (array)Config::inst()->get($this->class, 'belongs_to', Config::INHERITED);
+		$belongsTo = (array)Config::inst()->get(static::class, 'belongs_to', Config::INHERITED);
 		if($belongsTo && $classOnly) {
 			return preg_replace('/(.+)?\..+/', '$1', $belongsTo);
 		} else {
@@ -1975,7 +1973,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return string|null
 	 */
 	public function belongsToComponent($component, $classOnly = true) {
-		$belongsTo = (array)Config::inst()->get($this->class, 'belongs_to', Config::INHERITED);
+		$belongsTo = (array)Config::inst()->get(static::class, 'belongs_to', Config::INHERITED);
 
 		if($belongsTo && array_key_exists($component, $belongsTo)) {
 			$belongsTo = $belongsTo[$component];
@@ -2048,7 +2046,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			return $this->hasManyComponent($component, $classOnly);
 		}
 
-		$hasMany = (array)Config::inst()->get($this->class, 'has_many', Config::INHERITED);
+		$hasMany = (array)Config::inst()->get(static::class, 'has_many', Config::INHERITED);
 		if($hasMany && $classOnly) {
 			return preg_replace('/(.+)?\..+/', '$1', $hasMany);
 		} else {
@@ -2064,7 +2062,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return string|null
 	 */
 	public function hasManyComponent($component, $classOnly = true) {
-		$hasMany = (array)Config::inst()->get($this->class, 'has_many', Config::INHERITED);
+		$hasMany = (array)Config::inst()->get(static::class, 'has_many', Config::INHERITED);
 
 		if($hasMany && array_key_exists($component, $hasMany)) {
 			$hasMany = $hasMany[$component];
@@ -2084,7 +2082,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return array|null
 	 */
 	public function manyManyExtraFields() {
-		return Config::inst()->get($this->class, 'many_many_extraFields', Config::INHERITED);
+		return Config::inst()->get(static::class, 'many_many_extraFields', Config::INHERITED);
 	}
 
 	/**
@@ -2094,14 +2092,14 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	public function manyManyExtraFieldsForComponent($component) {
 		// Get all many_many_extraFields defined in this class or parent classes
-		$extraFields = (array)Config::inst()->get($this->class, 'many_many_extraFields', Config::INHERITED);
+		$extraFields = (array)Config::inst()->get(static::class, 'many_many_extraFields', Config::INHERITED);
 		// Extra fields are immediately available
 		if(isset($extraFields[$component])) {
 			return $extraFields[$component];
 		}
 
 		// Check this class' belongs_many_manys to see if any of their reverse associations contain extra fields
-		$manyMany = (array)Config::inst()->get($this->class, 'belongs_many_many', Config::INHERITED);
+		$manyMany = (array)Config::inst()->get(static::class, 'belongs_many_many', Config::INHERITED);
 		$candidate = (isset($manyMany[$component])) ? $manyMany[$component] : null;
 		if($candidate) {
 			$relationName = null;
@@ -2142,8 +2140,8 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return array|null An array of (parentclass, childclass), or an array of all many-many components
 	 */
 	public function manyMany() {
-		$manyManys = (array)Config::inst()->get($this->class, 'many_many', Config::INHERITED);
-		$belongsManyManys = (array)Config::inst()->get($this->class, 'belongs_many_many', Config::INHERITED);
+		$manyManys = (array)Config::inst()->get(static::class, 'many_many', Config::INHERITED);
+		$belongsManyManys = (array)Config::inst()->get(static::class, 'belongs_many_many', Config::INHERITED);
 		$items = array_merge($manyManys, $belongsManyManys);
 		return $items;
 	}
@@ -2203,7 +2201,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 
 			// Check valid relation found
 			if(!$relationName || !$otherManyMany || !isset($otherManyMany[$relationName])) {
-				throw new LogicException("Inverse component of $candidate not found ({$this->class})");
+				throw new LogicException("Inverse component of $candidate not found ("  .static::class . ")");
 			}
 
 			// If we've got a relation name (extracted from dot-notation), we can already work out
@@ -2249,7 +2247,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	public function getDefaultSearchContext() {
 		return new SearchContext(
-			$this->class,
+			static::class,
 			$this->scaffoldSearchFields(),
 			$this->defaultSearchFilters()
 		);
@@ -2456,7 +2454,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		}
 
 		// In case of complex fields, return the DBField object
-		if(self::is_composite_field($this->class, $field)) {
+		if(self::is_composite_field(static::class, $field)) {
 			$this->record[$field] = $this->dbObject($field);
 		}
 
@@ -2758,7 +2756,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	public function hasDatabaseField($field) {
 		return $this->db($field)
- 			&& ! self::is_composite_field(get_class($this), $field);
+ 			&& ! self::is_composite_field(static::class, $field);
 	}
 
 	/**
@@ -2769,7 +2767,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return string The field type of the given field
 	 */
 	public function hasOwnTableDatabaseField($field) {
-		return self::has_own_table_database_field($this->class, $field);
+		return self::has_own_table_database_field(static::class, $field);
 	}
 
 	/**
@@ -2869,7 +2867,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 							}
 					}
 
-					Config::inst()->update($this->class, 'permissionCache', $permissionCache);
+					Config::inst()->update(static::class, 'permissionCache', $permissionCache);
 				}
 
 				if($permissionCache[$memberID][$perm]) {
@@ -2970,7 +2968,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return string HTML data representing this object
 	 */
 	public function debug() {
-		$val = "<h3>Database record: $this->class</h3>\n<ul>\n";
+		$val = "<h3>Database record: " . static::class . "</h3>\n<ul>\n";
 		if($this->record) foreach($this->record as $fieldName => $fieldVal) {
 			$val .= "\t<li>$fieldName: " . Debug::text($fieldVal) . "</li>\n";
 		}
@@ -3082,7 +3080,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 					// Select db object
 					$component = $dbObject;
 				} else {
-					user_error("$relation is not a relation/field on ".get_class($component), E_USER_ERROR);
+					user_error("$relation is not a relation/field on " . get_class($component), E_USER_ERROR);
 				}
 			}
 		}
@@ -3226,12 +3224,12 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return DataObject $this
 	 */
 	public function flushCache($persistent = true) {
-		if($this->class == __CLASS__) {
+		if(static::class == __CLASS__) {
 			self::$_cache_get_one = array();
 			return $this;
 		}
 
-		$classes = ClassInfo::ancestry($this->class);
+		$classes = ClassInfo::ancestry(static::class);
 		foreach($classes as $class) {
 			if(isset(self::$_cache_get_one[$class])) {
 				unset(self::$_cache_get_one[$class]);
@@ -3401,9 +3399,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	public function requireTable() {
 		// Only build the table if we've actually got fields
-		$fields = self::database_fields($this->class);
-		$table = static::getSchema()->tableName($this->class);
-		$extensions = self::database_extensions($this->class);
+		$fields = self::database_fields(static::class);
+		$table = static::getSchema()->tableName(static::class);
+		$extensions = self::database_extensions(static::class);
 
 		$indexes = $this->databaseIndexes();
 
@@ -3423,7 +3421,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			$extras = $this->uninherited('many_many_extraFields');
 			foreach($manyMany as $relationship => $childClass) {
 				// Build field list
-				if($this->class === $childClass) {
+				if(static::class === $childClass) {
 					$childField = "ChildID";
 				} else {
 					$childTable = $this->getSchema()->tableName($childClass);
@@ -3457,13 +3455,13 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 */
 	protected function validateModelDefinitions() {
 		$modelDefinitions = array(
-			'db' => Config::inst()->get($this->class, 'db', Config::UNINHERITED),
-			'has_one' => Config::inst()->get($this->class, 'has_one', Config::UNINHERITED),
-			'has_many' => Config::inst()->get($this->class, 'has_many', Config::UNINHERITED),
-			'belongs_to' => Config::inst()->get($this->class, 'belongs_to', Config::UNINHERITED),
-			'many_many' => Config::inst()->get($this->class, 'many_many', Config::UNINHERITED),
-			'belongs_many_many' => Config::inst()->get($this->class, 'belongs_many_many', Config::UNINHERITED),
-			'many_many_extraFields' => Config::inst()->get($this->class, 'many_many_extraFields', Config::UNINHERITED)
+			'db' => Config::inst()->get(static::class, 'db', Config::UNINHERITED),
+			'has_one' => Config::inst()->get(static::class, 'has_one', Config::UNINHERITED),
+			'has_many' => Config::inst()->get(static::class, 'has_many', Config::UNINHERITED),
+			'belongs_to' => Config::inst()->get(static::class, 'belongs_to', Config::UNINHERITED),
+			'many_many' => Config::inst()->get(static::class, 'many_many', Config::UNINHERITED),
+			'belongs_many_many' => Config::inst()->get(static::class, 'belongs_many_many', Config::UNINHERITED),
+			'many_many_extraFields' => Config::inst()->get(static::class, 'many_many_extraFields', Config::UNINHERITED)
 		);
 
 		foreach($modelDefinitions as $defType => $relations) {
@@ -3472,13 +3470,13 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 			foreach($relations as $k => $v) {
 				if($defType === 'many_many_extraFields') {
 					if(!is_array($v)) {
-						throw new LogicException("$this->class::\$many_many_extraFields has a bad entry: "
+						throw new LogicException(static::class . "::\$many_many_extraFields has a bad entry: "
 							. var_export($k, true) . " => " . var_export($v, true)
 							. ". Each many_many_extraFields entry should map to a field specification array.");
 					}
 				} else {
 					if(!is_string($k) || is_numeric($k) || !is_string($v)) {
-						throw new LogicException("$this->class::$defType has a bad entry: "
+						throw new LogicException(static::class . "::$defType has a bad entry: "
 							. var_export($k, true). " => " . var_export($v, true) . ".  Each map key should be a
 							 relationship name, and the map value should be the data class to join to.");
 					}
@@ -3499,9 +3497,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 		$defaultRecords = $this->stat('default_records');
 
 		if(!empty($defaultRecords)) {
-			$hasData = DataObject::get_one($this->class);
+			$hasData = DataObject::get_one(static::class);
 			if(!$hasData) {
-				$className = $this->class;
+				$className = static::class;
 				foreach($defaultRecords as $record) {
 					$obj = $this->model->$className->newObject($record);
 					$obj->write();
@@ -3620,14 +3618,14 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * @return array|string Array of all element labels if no argument given, otherwise the label of the field
 	 */
 	public function fieldLabels($includerelations = true) {
-		$cacheKey = $this->class . '_' . $includerelations;
+		$cacheKey = static::class . '_' . $includerelations;
 
 		if(!isset(self::$_cache_field_labels[$cacheKey])) {
 			$customLabels = $this->stat('field_labels');
 			$autoLabels = array();
 
 			// get all translated static properties as defined in i18nCollectStatics()
-			$ancestry = ClassInfo::ancestry($this->class);
+			$ancestry = ClassInfo::ancestry(static::class);
 			$ancestry = array_reverse($ancestry);
 			if($ancestry) foreach($ancestry as $ancestorClass) {
 				if($ancestorClass == 'SilverStripe\\View\\ViewableData') break;
@@ -3987,13 +3985,13 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	public function provideI18nEntities() {
 		$entities = array();
 
-		$entities["{$this->class}.SINGULARNAME"] = array(
+		$entities[static::class . ".SINGULARNAME"] = array(
 			$this->singular_name(),
 
 			'Singular name of the object, used in dropdowns and to generally identify a single object in the interface'
 		);
 
-		$entities["{$this->class}.PLURALNAME"] = array(
+		$entities[static::class . ".PLURALNAME"] = array(
 			$this->plural_name(),
 
 			'Pural name of the object, used in dropdowns and to generally identify a collection of this object in the'

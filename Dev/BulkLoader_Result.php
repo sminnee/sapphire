@@ -139,7 +139,7 @@ class BulkLoader_Result extends Object
 	{
 		$this->created[] = $this->lastChange = array(
 			'ID' => $obj->ID,
-			'ClassName' => $obj->class,
+			'ClassName' => get_class($obj),
 			'Message' => $message
 		);
 		$this->lastChange['ChangeType'] = 'created';
@@ -153,7 +153,7 @@ class BulkLoader_Result extends Object
 	{
 		$this->updated[] = $this->lastChange = array(
 			'ID' => $obj->ID,
-			'ClassName' => $obj->class,
+			'ClassName' => get_class($obj),
 			'Message' => $message
 		);
 		$this->lastChange['ChangeType'] = 'updated';

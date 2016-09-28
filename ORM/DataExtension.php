@@ -144,7 +144,7 @@ abstract class DataExtension extends Extension {
 	 * @param array $fields Array of field names
 	 */
 	public function updateSummaryFields(&$fields) {
-		$summary_fields = Config::inst()->get($this->class, 'summary_fields');
+		$summary_fields = Config::inst()->get(static::class, 'summary_fields');
 		if($summary_fields) {
 			// if summary_fields were passed in numeric array,
 			// convert to an associative array
@@ -164,7 +164,7 @@ abstract class DataExtension extends Extension {
 	 * @param array $labels Array of field labels
 	 */
 	public function updateFieldLabels(&$labels) {
-		$field_labels = Config::inst()->get($this->class, 'field_labels');
+		$field_labels = Config::inst()->get(static::class, 'field_labels');
 		if($field_labels) {
 			$labels = array_merge($labels, $field_labels);
 		}

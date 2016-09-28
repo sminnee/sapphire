@@ -45,7 +45,7 @@ class AssetAdapter extends Local {
 		$root = $this->findRoot($root);
 
 		// Override permissions with config
-		$permissions = Config::inst()->get(get_class($this), 'file_permissions');
+		$permissions = Config::inst()->get(static::class, 'file_permissions');
 		parent::__construct($root, $writeFlags, $linkHandling, $permissions);
 
 		// Configure server
@@ -96,7 +96,7 @@ class AssetAdapter extends Local {
 		list($type) = explode('/', strtolower($type));
 
 		// Determine configurations to write
-		$rules = Config::inst()->get(get_class($this), 'server_configuration', Config::FIRST_SET);
+		$rules = Config::inst()->get(static::class, 'server_configuration', Config::FIRST_SET);
 		if(empty($rules[$type])) {
 			return;
 		}

@@ -80,8 +80,8 @@ class FunctionalTest extends SapphireTest {
 
 	public function setUp() {
 		// Skip calling FunctionalTest directly.
-		if(get_class($this) == __CLASS__) {
-			$this->markTestSkipped(sprintf('Skipping %s ', get_class($this)));
+		if(static::class == __CLASS__) {
+			$this->markTestSkipped(sprintf('Skipping %s ', static::class));
 		}
 
 		parent::setUp();

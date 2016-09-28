@@ -618,7 +618,7 @@ class LeftAndMain extends Controller implements PermissionProvider {
 		}
 
 		$title = $this->Title();
-		if(!$response->getHeader('X-Controller')) $response->addHeader('X-Controller', $this->class);
+		if(!$response->getHeader('X-Controller')) $response->addHeader('X-Controller', static::class);
 		if(!$response->getHeader('X-Title')) $response->addHeader('X-Title', urlencode($title));
 
 		// Prevent clickjacking, see https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options
@@ -698,7 +698,7 @@ class LeftAndMain extends Controller implements PermissionProvider {
 		if($this->config()->url_segment) {
 			$segment = $this->config()->get('url_segment', Config::FIRST_SET);
 		} else {
-			$segment = $this->class;
+			$segment = static::class;
 		};
 
 		$link = Controller::join_links(
@@ -843,7 +843,7 @@ class LeftAndMain extends Controller implements PermissionProvider {
 
 					$linkingmode = "link";
 
-					if($menuItem->controller && get_class($this) == $menuItem->controller) {
+					if($menuItem->controller && static::class == $menuItem->controller) {
 						$linkingmode = "current";
 					} else if(strpos($this->Link(), $menuItem->url) !== false) {
 						if($this->Link() == $menuItem->url) {
@@ -920,7 +920,7 @@ class LeftAndMain extends Controller implements PermissionProvider {
 	 * @return array
 	 */
 	public function getTemplatesWithSuffix($suffix) {
-		$templates = SSViewer::get_templates_by_class(get_class($this), $suffix, __CLASS__);
+		$templates = SSViewer::get_templates_by_class(static::class, $suffix, __CLASS__);
 		return SSViewer::chooseTemplate($templates);
 	}
 
@@ -1826,7 +1826,7 @@ class LeftAndMain extends Controller implements PermissionProvider {
 	 */
 	protected function sessionNamespace() {
 		$override = $this->stat('session_namespace');
-		return $override ? $override : $this->class;
+		return $override ? $override : static::class;
 	}
 
 	/**

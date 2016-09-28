@@ -45,12 +45,6 @@ abstract class Extension {
 	 */
 	private $ownerStack = [];
 
-	public $class;
-
-	public function __construct() {
-		$this->class = get_class($this);
-	}
-
 	/**
 	 * Called when this extension is added to a particular class
 	 *

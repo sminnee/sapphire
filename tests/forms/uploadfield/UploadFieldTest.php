@@ -123,13 +123,13 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFileExists(AssetStoreTest_SpyStore::getLocalPath($uploadedFile));
 
 		// Secondly, ensure that simply uploading an object does not save the file against the relation
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertFalse($record->HasOneFile()->exists());
 
 		// Thirdly, test submitting the form with the encoded data
 		$response = $this->mockUploadFileIDs('HasOneFile', array($uploadedFile->ID));
 		$this->assertEmpty($response['errors']);
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertTrue($record->HasOneFile()->exists());
 		$this->assertEquals($record->HasOneFile()->Name, $tmpFileName);
 	}
@@ -155,13 +155,13 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFileExists(AssetStoreTest_SpyStore::getLocalPath($uploadedFile));
 
 		// Test that the record isn't written to automatically
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertFalse($record->HasOneExtendedFile()->exists());
 
 		// Test that saving the form writes the record
 		$response = $this->mockUploadFileIDs('HasOneExtendedFile', array($uploadedFile->ID));
 		$this->assertEmpty($response['errors']);
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertTrue($record->HasOneExtendedFile()->exists());
 		$this->assertEquals($record->HasOneExtendedFile()->Name, $tmpFileName);
 	}
@@ -184,14 +184,14 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFileExists(AssetStoreTest_SpyStore::getLocalPath($uploadedFile));
 
 		// Test that the record isn't written to automatically
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertEquals(2, $record->HasManyFiles()->Count()); // Existing two files should be retained
 
 		// Test that saving the form writes the record
 		$ids = array_merge($record->HasManyFiles()->getIDList(), array($uploadedFile->ID));
 		$response = $this->mockUploadFileIDs('HasManyFiles', $ids);
 		$this->assertEmpty($response['errors']);
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertEquals(3, $record->HasManyFiles()->Count()); // New record should appear here now
 	}
 
@@ -213,7 +213,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFileExists(AssetStoreTest_SpyStore::getLocalPath($uploadedFile));
 
 		// Test that the record isn't written to automatically
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		// Existing file count should be retained
 		$this->assertEquals($relationCount, $record->ManyManyFiles()->Count());
 
@@ -221,7 +221,7 @@ class UploadFieldTest extends FunctionalTest {
 		$ids = array_merge($record->ManyManyFiles()->getIDList(), array($uploadedFile->ID));
 		$response = $this->mockUploadFileIDs('ManyManyFiles', $ids);
 		$this->assertEmpty($response['errors']);
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$record->flushCache();
 		// New record should appear here now
 		$this->assertEquals($relationCount + 1, $record->ManyManyFiles()->Count());
@@ -371,7 +371,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEmpty($response['errors']);
 
 		// Check file is removed
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertFalse($record->HasOneFile()->exists());
 
 		// Check file object itself exists
@@ -397,7 +397,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEmpty($response['errors']);
 
 		// check only file 3 is left
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertEquals(array('File3'), $record->HasManyFiles()->column('Title'));
 
 		// Check file 2 object itself exists
@@ -424,7 +424,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEmpty($response['errors']);
 
 		// check only file 5 is left
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertNotContains('File4', $record->ManyManyFiles()->column('Title'));
 		$this->assertContains('File5', $record->ManyManyFiles()->column('Title'));
 
@@ -453,7 +453,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEmpty($response['errors']);
 
 		// Check that file is not set against record
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertFalse($record->HasOneFile()->exists());
 	}
 
@@ -477,7 +477,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertEmpty($response['errors']);
 
 		// Test that file is removed from record
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertEquals(array('File3'), $record->HasManyFiles()->column('Title'));
 	}
 
@@ -504,7 +504,7 @@ class UploadFieldTest extends FunctionalTest {
 		$this->assertFalse($response->isError());
 
 		// Check file is removed from record
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
 		$this->assertNotContains('File4', $record->ManyManyFiles()->column('Title'));
 		$this->assertContains('File5', $record->ManyManyFiles()->column('Title'));
 
@@ -558,8 +558,8 @@ class UploadFieldTest extends FunctionalTest {
 		$response = $this->mockFileEdit('ManyManyFiles', $file4->ID, array('Title' => 'File 4 modified'));
 		$this->assertFalse($response->isError());
 
-		$record = DataObject::get_by_id($record->class, $record->ID, false);
-		$file4 = DataObject::get_by_id($file4->class, $file4->ID, false);
+		$record = DataObject::get_by_id(get_class($record), $record->ID, false);
+		$file4 = DataObject::get_by_id(get_class($file4), $file4->ID, false);
 		$this->assertEquals('File 4 modified', $file4->Title);
 
 		// Test record-based permissions

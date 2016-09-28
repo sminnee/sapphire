@@ -1057,7 +1057,7 @@ class FormField extends RequestHandler {
 	 * @return array
 	 */
 	protected function _templates($customTemplate = null, $customTemplateSuffix = null) {
-		$templates = SSViewer::get_templates_by_class(get_class($this), $customTemplateSuffix, __CLASS__);
+		$templates = SSViewer::get_templates_by_class(static::class, $customTemplateSuffix, __CLASS__);
 		// Prefer any custom template
 		if($customTemplate) {
 			// Prioritise direct template
@@ -1146,7 +1146,7 @@ class FormField extends RequestHandler {
 	 * @return FormField
 	 */
 	public function performReadonlyTransformation() {
-		$readonlyClassName = $this->class . '_Readonly';
+		$readonlyClassName = static::class . '_Readonly';
 
 		if(ClassInfo::exists($readonlyClassName)) {
 			$clone = $this->castedCopy($readonlyClassName);
@@ -1168,7 +1168,7 @@ class FormField extends RequestHandler {
 	 * @return FormField
 	 */
 	public function performDisabledTransformation() {
-		$disabledClassName = $this->class . '_Disabled';
+		$disabledClassName = static::class . '_Disabled';
 
 		if(ClassInfo::exists($disabledClassName)) {
 			$clone = $this->castedCopy($disabledClassName);
@@ -1198,7 +1198,7 @@ class FormField extends RequestHandler {
 	public function hasClass($class) {
 		$patten = '/' . strtolower($class) . '/i';
 
-		$subject = strtolower($this->class . ' ' . $this->extraClass());
+		$subject = strtolower(static::class . ' ' . $this->extraClass());
 
 		return preg_match($patten, $subject);
 	}
@@ -1275,7 +1275,7 @@ class FormField extends RequestHandler {
 	public function debug() {
 		return sprintf(
 			'%s (%s: %s : <span style="color:red;">%s</span>) = %s',
-			$this->class,
+			static::class,
 			$this->name,
 			$this->title,
 			$this->message,
@@ -1333,7 +1333,7 @@ class FormField extends RequestHandler {
 		}
 
 		user_error(
-			"rootFieldList() called on $this->class object without a containerFieldList",
+			"rootFieldList() called on " . static::class . " object without a containerFieldList",
 			E_USER_ERROR
 		);
 

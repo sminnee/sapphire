@@ -560,14 +560,14 @@ class DataObjectTest extends SapphireTest {
 
 		// Set the favourite team for fan1
 		$fan1->setField('FavouriteID', $team1->ID);
-		$fan1->setField('FavouriteClass', $team1->class);
+		$fan1->setField('FavouriteClass', get_class($team1));
 
 		$this->assertEquals($team1->ID, $fan1->Favourite()->ID, 'The team is assigned to fan 1');
-		$this->assertInstanceOf($team1->class, $fan1->Favourite(), 'The team is assigned to fan 1');
+		$this->assertInstanceOf(get_class($team1), $fan1->Favourite(), 'The team is assigned to fan 1');
 		$this->assertEquals($team1->ID, $fan1->getComponent('Favourite')->ID,
 			'The team exists through the component getter'
 		);
-		$this->assertInstanceOf($team1->class, $fan1->getComponent('Favourite'),
+		$this->assertInstanceOf(get_class($team1), $fan1->getComponent('Favourite'),
 			'The team exists through the component getter'
 		);
 
@@ -753,10 +753,10 @@ class DataObjectTest extends SapphireTest {
 		// Test for polymorphic has_one relations
 		$fan = $this->objFromFixture('DataObjectTest_Fan', 'fan1');
 		$fan->FavouriteID = $team->ID;
-		$fan->FavouriteClass = $team->class;
+		$fan->FavouriteClass = get_class($team);
 		$this->assertNotNull($fan->Favourite());
 		$this->assertEquals($team->ID, $fan->Favourite()->ID);
-		$this->assertInstanceOf($team->class, $fan->Favourite());
+		$this->assertInstanceOf(get_class($team), $fan->Favourite());
 	}
 
 	public function testFieldNamesThatMatchMethodNamesWork() {
@@ -1672,11 +1672,11 @@ class DataObjectTest extends SapphireTest {
 
 		// Test belongs_to assignment
 		$company->OwnerID = $ceo->ID;
-		$company->OwnerClass = $ceo->class;
+		$company->OwnerClass = get_class($ceo);
 		$company->write();
 
 		$this->assertEquals($company->ID, $ceo->CompanyOwned()->ID, 'belongs_to returns the right results.');
-		$this->assertEquals($company->class, $ceo->CompanyOwned()->class, 'belongs_to returns the right results.');
+		$this->assertEquals(get_class($company), get_class($ceo->CompanyOwned()), 'belongs_to returns the right results.');
 
 		// Test automatic creation of class where no assigment exists
 		$ceo = new DataObjectTest_CEO();

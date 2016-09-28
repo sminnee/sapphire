@@ -220,8 +220,8 @@ class CompositeField extends FormField {
 					$formName = (isset($this->form)) ? $this->form->FormName() : '(unknown form)';
 					if(isset($list[$name])) {
 						user_error("collateDataFields() I noticed that a field called '$name' appears twice in"
-							. " your form: '{$formName}'.  One is a '{$field->class}' and the other is a"
-							. " '{$list[$name]->class}'", E_USER_ERROR);
+							. " your form: '{$formName}'.  One is a '" . get_class($field) . "' and the other is a"
+							. " '" . get_class($list[$name]) . "'", E_USER_ERROR);
 					}
 					$list[$name] = $field;
 				}
@@ -454,7 +454,7 @@ class CompositeField extends FormField {
 	}
 
 	public function debug() {
-		$result = "$this->class ($this->name) <ul>";
+		$result = static::class . " ($this->name) <ul>";
 		foreach($this->children as $child) {
 			$result .= "<li>" . Debug::text($child) . "&nbsp;</li>";
 		}

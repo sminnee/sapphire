@@ -132,7 +132,7 @@ abstract class SearchFilter extends Object {
 		$unsupported = array_diff($modifiers, $allowed);
 		if ($unsupported) {
 			throw new InvalidArgumentException(
-				get_class($this) . ' does not accept ' . implode(', ', $unsupported) . ' as modifiers'
+				static::class . ' does not accept ' . implode(', ', $unsupported) . ' as modifiers'
 			);
 		}
 
@@ -206,7 +206,7 @@ abstract class SearchFilter extends Object {
 		// Ensure that we're dealing with a DataObject.
 		if (!is_subclass_of($this->model, 'SilverStripe\\ORM\\DataObject')) {
 			throw new InvalidArgumentException(
-				"Model supplied to " . get_class($this) . " should be an instance of DataObject."
+				"Model supplied to " . static::class . " should be an instance of DataObject."
 			);
 		}
 
@@ -269,7 +269,7 @@ abstract class SearchFilter extends Object {
 	 * @return DataQuery
 	 */
 	protected function applyMany(DataQuery $query) {
-		throw new InvalidArgumentException(get_class($this) . " can't be used to filter by a list of items.");
+		throw new InvalidArgumentException(static::class . " can't be used to filter by a list of items.");
 	}
 
 	/**
@@ -305,7 +305,7 @@ abstract class SearchFilter extends Object {
 	 * @return DataQuery
 	 */
 	protected function excludeMany(DataQuery $query) {
-		throw new InvalidArgumentException(get_class($this) . " can't be used to filter by a list of items.");
+		throw new InvalidArgumentException(static::class . " can't be used to filter by a list of items.");
 	}
 
 	/**

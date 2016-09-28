@@ -419,7 +419,7 @@ abstract class DBField extends ViewableData {
 	public function saveInto($dataObject) {
 		$fieldName = $this->name;
 		if(empty($fieldName)) {
-			throw new \BadMethodCallException("DBField::saveInto() Called on a nameless '" . get_class($this) . "' object");
+			throw new \BadMethodCallException("DBField::saveInto() Called on a nameless '" . static::class . "' object");
 		}
 		$dataObject->$fieldName = $this->value;
 	}

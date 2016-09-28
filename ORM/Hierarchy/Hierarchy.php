@@ -108,7 +108,7 @@ class Hierarchy extends DataExtension {
 						'Hierarchy.InfiniteLoopNotAllowed',
 						'Infinite loop found within the "{type}" hierarchy. Please change the parent to resolve this',
 						'First argument is the class that makes up the hierarchy.',
-						array('type' => $this->owner->class)
+						array('type' => get_class($this->owner))
 					),
 					'INFINITE_LOOP'
 				);
@@ -644,7 +644,7 @@ class Hierarchy extends DataExtension {
 			$this->owner->extend("augmentAllChildrenIncludingDeleted", $stageChildren, $context);
 
 		} else {
-			user_error("Hierarchy::AllChildren() Couldn't determine base class for '{$this->owner->class}'",
+			user_error("Hierarchy::AllChildren() Couldn't determine base class for '" . get_class($this->owner) . "'",
 				E_USER_ERROR);
 		}
 
@@ -791,7 +791,7 @@ class Hierarchy extends DataExtension {
 			return null;
 		}
 		$idSQL = $this->owner->getSchema()->sqlColumnForField($this->owner, 'ID');
-		return DataObject::get_one($this->owner->class, array(
+		return DataObject::get_one(get_class($this->owner), array(
 			array($idSQL => $parentID),
 			$filter
 		));
@@ -852,7 +852,7 @@ class Hierarchy extends DataExtension {
 	public function naturalNext($className = null, $root = 0, $afterNode = null ) {
 		// If this node is not the node we are searching from, then we can possibly return this node as a solution
 		if($afterNode && $afterNode->ID != $this->owner->ID) {
-			if(!$className || ($className && $this->owner->class == $className)) {
+			if(!$className || ($className && get_class($this->owner) == $className)) {
 				return $this->owner;
 			}
 		}
@@ -885,7 +885,7 @@ class Hierarchy extends DataExtension {
 		}
 
 		// if this is not an instance of the root class or has the root id, search the parent
-		if(!(is_numeric($root) && $root == $this->owner->ID || $root == $this->owner->class)
+		if(!(is_numeric($root) && $root == $this->owner->ID || $root == get_class($this->owner))
 				&& ($parent = $this->owner->Parent())) {
 
 			return $parent->naturalNext( $className, $root, $this->owner );

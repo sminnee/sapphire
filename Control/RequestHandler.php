@@ -162,7 +162,7 @@ class RequestHandler extends ViewableData {
 	public function handleRequest(HTTPRequest $request, DataModel $model) {
 		// $handlerClass is used to step up the class hierarchy to implement url_handlers inheritance
 		if($this->brokenOnConstruct) {
-			$handlerClass = get_class($this);
+			$handlerClass = static::class;
 			throw new BadMethodCallException(
 				"parent::__construct() needs to be called on {$handlerClass}::__construct()"
 			);
@@ -203,7 +203,7 @@ class RequestHandler extends ViewableData {
 			user_error("Non-string method name: " . var_export($action, true), E_USER_ERROR);
 		}
 
-		$classMessage = Director::isLive() ? 'on this handler' : 'on class '.get_class($this);
+		$classMessage = Director::isLive() ? 'on this handler' : 'on class '.static::class;
 
 		try {
 			if(!$this->hasAction($action)) {
@@ -256,7 +256,7 @@ class RequestHandler extends ViewableData {
 	 * @return array
      */
 	protected function findAction($request) {
-		$handlerClass = ($this->class) ? $this->class : get_class($this);
+		$handlerClass = static::class;
 
 		// We stop after RequestHandler; in other words, at ViewableData
 		while($handlerClass && $handlerClass != 'SilverStripe\\View\\ViewableData') {
@@ -264,13 +264,13 @@ class RequestHandler extends ViewableData {
 
 			if($urlHandlers) foreach($urlHandlers as $rule => $action) {
 				if(isset($_REQUEST['debug_request'])) {
-					Debug::message("Testing '$rule' with '" . $request->remaining() . "' on $this->class");
+					Debug::message("Testing '$rule' with '" . $request->remaining() . "' on " .static::class);
 				}
 
 				if($request->match($rule, true)) {
 					if(isset($_REQUEST['debug_request'])) {
 						Debug::message(
-							"Rule '$rule' matched to action '$action' on $this->class. ".
+							"Rule '$rule' matched to action '$action' on " . static::class . ". " .
 							"Latest request params: " . var_export($request->latestParams(), true)
 						);
 					}
@@ -294,7 +294,7 @@ class RequestHandler extends ViewableData {
 	 * @return HTTPResponse
 	 */
 	protected function handleAction($request, $action) {
-		$classMessage = Director::isLive() ? 'on this handler' : 'on class '.get_class($this);
+		$classMessage = Director::isLive() ? 'on this handler' : 'on class '.static::class;
 
 		if(!$this->hasMethod($action)) {
 			return new HTTPResponse("Action '$action' isn't available $classMessage.", 404);
@@ -331,7 +331,7 @@ class RequestHandler extends ViewableData {
 				Config::UNINHERITED | Config::EXCLUDE_EXTRA_SOURCES
 			);
 		} else {
-			$actions = Config::inst()->get(get_class($this), 'allowed_actions');
+			$actions = Config::inst()->get(static::class, 'allowed_actions');
 		}
 
 		if(is_array($actions)) {

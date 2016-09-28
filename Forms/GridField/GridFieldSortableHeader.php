@@ -70,7 +70,7 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
 		} else {
 			if($this->throwExceptionOnBadDataType) {
 				throw new LogicException(
-					get_class($this) . " expects an SS_Sortable list to be passed to the GridField.");
+					static::class . " expects an SS_Sortable list to be passed to the GridField.");
 			}
 			return false;
 		}

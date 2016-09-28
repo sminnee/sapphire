@@ -158,8 +158,8 @@ class TreeMultiselectField extends TreeDropdownField {
 			$fieldName = $this->name;
 			$saveDest = $record->$fieldName();
 			if(!$saveDest) {
-				user_error("TreeMultiselectField::saveInto() Field '$fieldName' not found on"
-					. " $record->class.$record->ID", E_USER_ERROR);
+				user_error("TreeMultiselectField::saveInto() Field '$fieldName' not found on "
+					. get_class($record) . ".$record->ID", E_USER_ERROR);
 			}
 
 			if($this->value) {

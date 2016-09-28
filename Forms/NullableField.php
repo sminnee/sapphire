@@ -161,7 +161,7 @@ class NullableField extends FormField {
 	public function debug() {
 		$result = sprintf(
 			'%s (%s: $s : <span style="color: red">%s</span>) = ',
-			$this->class,
+			static::class,
 			$this->name,
 			$this->title,
 			$this->message

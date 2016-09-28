@@ -221,8 +221,8 @@ class GridFieldDetailForm implements GridField_URLHandler {
 	public function getItemRequestClass() {
 		if($this->itemRequestClass) {
 			return $this->itemRequestClass;
-		} else if(ClassInfo::exists(get_class($this) . "_ItemRequest")) {
-			return get_class($this) . "_ItemRequest";
+		} else if(ClassInfo::exists(static::class . "_ItemRequest")) {
+			return static::class . "_ItemRequest";
 		} else {
 			return __CLASS__ . '_ItemRequest';
 		}

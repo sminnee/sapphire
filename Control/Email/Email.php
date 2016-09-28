@@ -362,7 +362,7 @@ class Email extends ViewableData {
 	public function debug() {
 		$this->parseVariables();
 
-		return "<h2>Email template $this->class</h2>\n" .
+		return "<h2>Email template " . static::class . "</h2>\n" .
 			"<p><b>From:</b> $this->from\n" .
 			"<b>To:</b> $this->to\n" .
 			"<b>Cc:</b> $this->cc\n" .

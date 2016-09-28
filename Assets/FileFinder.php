@@ -69,7 +69,7 @@ class FileFinder {
 
 	public function __construct() {
 		$this->options = array();
-		$class = get_class($this);
+		$class = static::class;
 
 		// We build our options array ourselves, because possibly no class or config manifest exists at this point
 		do {

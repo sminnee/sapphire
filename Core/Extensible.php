@@ -106,7 +106,7 @@ trait Extensible {
 	}
 
 	protected function constructExtensions() {
-		$class = get_class($this);
+		$class = static::class;
 
 		// Register this trait as a method source
 		$this->registerExtraMethodCallback('defineExtensionMethods', function() {
@@ -122,7 +122,7 @@ trait Extensible {
 			if($extensions) foreach($extensions as $extension) {
 				$instance = Object::create_from_string($extension);
 				$instance->setOwner(null, $class);
-				$this->extension_instances[$instance->class] = $instance;
+				$this->extension_instances[get_class($instance)] = $instance;
 			}
 		}
 

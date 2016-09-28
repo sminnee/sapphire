@@ -274,7 +274,7 @@ class Form extends RequestHandler {
 		$this->controller = $controller;
 		$this->setName($name);
 
-		if(!$this->controller) user_error("$this->class form created without a controller", E_USER_ERROR);
+		if(!$this->controller) user_error(static::class . " form created without a controller", E_USER_ERROR);
 
 		// Form validation
 		$this->validator = ($validator) ? $validator : new RequiredFields();
@@ -1037,7 +1037,7 @@ class Form extends RequestHandler {
 	 * @return array
 	 */
 	public function getTemplates() {
-		$templates = SSViewer::get_templates_by_class(get_class($this), '', __CLASS__);
+		$templates = SSViewer::get_templates_by_class(static::class, '', __CLASS__);
 		// Prefer any custom template
 		if($this->getTemplate()) {
 			array_unshift($templates, $this->getTemplate());
@@ -1840,7 +1840,7 @@ class Form extends RequestHandler {
 	}
 
 	public function debug() {
-		$result = "<h3>$this->class</h3><ul>";
+		$result = "<h3>" . static::class . "</h3><ul>";
 		foreach($this->fields as $field) {
 			$result .= "<li>$field" . $field->debug() . "</li>";
 		}

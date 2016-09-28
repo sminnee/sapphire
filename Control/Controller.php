@@ -118,7 +118,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 		$this->init();
 		if (!$this->baseInitCalled) {
 			user_error(
-				"init() method on class '$this->class' doesn't call Controller::init()."
+				"init() method on class 'static::class' doesn't call Controller::init()."
 				. "Make sure that you have parent::init() included.",
 				E_USER_WARNING
 			);
@@ -235,7 +235,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 		if ($response instanceof HTTPResponse) {
 			if (isset($_REQUEST['debug_request'])) {
 				Debug::message(
-					"Request handler returned HTTPResponse object to $this->class controller;"
+					"Request handler returned HTTPResponse object to static::class controller;"
 					. "returning it without modification."
 				);
 			}
@@ -246,8 +246,8 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 			if ($response instanceof Object && $response->hasMethod('getViewer')) {
 				if (isset($_REQUEST['debug_request'])) {
 					Debug::message(
-						"Request handler $response->class object to $this->class controller;"
-						. "rendering with template returned by $response->class::getViewer()"
+						"Request handler " . get_class($response) . " object to " . static::class . " controller;"
+						. "rendering with template returned by " . get_class($response) . "::getViewer()"
 					);
 				}
 				$response = $response->getViewer($this->getAction())->process($response);
@@ -396,14 +396,14 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 			// Add action-specific templates for inheritance chain
 			$templates = array();
 			if($action && $action != 'index') {
-				$parentClass = $this->class;
+				$parentClass = static::class;
 				while($parentClass != __CLASS__) {
 					$templates[] = strtok($parentClass,'_') . '_' . $action;
 					$parentClass = get_parent_class($parentClass);
 				}
 			}
 			// Add controller templates for inheritance chain
-			$parentClass = $this->class;
+			$parentClass = static::class;
 			while($parentClass != __CLASS__) {
 				$templates[] = strtok($parentClass,'_');
 				$parentClass = get_parent_class($parentClass);
@@ -461,7 +461,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 			return $definingClass;
 		}
 
-		$class = get_class($this);
+		$class = static::class;
 		while($class != 'SilverStripe\\Control\\RequestHandler') {
 			$templateName = strtok($class, '_') . '_' . $action;
 			if(SSViewer::hasTemplate($templateName)) {
@@ -485,7 +485,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 	public function hasActionTemplate($action) {
 		if(isset($this->templates[$action])) return true;
 
-		$parentClass = $this->class;
+		$parentClass = static::class;
 		$templates   = array();
 
 		while($parentClass != __CLASS__) {
@@ -592,7 +592,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 		if($this === self::$controller_stack[0]) {
 			array_shift(self::$controller_stack);
 		} else {
-			user_error("popCurrent called on $this->class controller, but it wasn't at the top of the stack",
+			user_error("popCurrent called on " . static::class . " controller, but it wasn't at the top of the stack",
 				E_USER_WARNING);
 		}
 	}

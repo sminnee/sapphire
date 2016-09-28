@@ -28,8 +28,8 @@ class ImageTest extends SapphireTest {
 		parent::setUp();
 
 		// Execute specific subclass
-		if(get_class($this) == "ImageTest") {
-			$this->markTestSkipped(sprintf('Skipping %s ', get_class($this)));
+		if(static::class == "ImageTest") {
+			$this->markTestSkipped(sprintf('Skipping %s ', static::class));
 			return;
 		}
 

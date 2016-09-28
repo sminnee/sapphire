@@ -43,7 +43,7 @@ class DBBoolean extends DBField {
 		if($fieldName) {
 			$dataObject->$fieldName = ($this->value) ? 1 : 0;
 		} else {
-			user_error("DBField::saveInto() Called on a nameless '$this->class' object", E_USER_ERROR);
+			user_error("DBField::saveInto() Called on a nameless '" . static::class . "' object", E_USER_ERROR);
 		}
 	}
 

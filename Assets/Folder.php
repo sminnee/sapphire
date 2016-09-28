@@ -241,7 +241,7 @@ class Folder extends File {
 	 * @return string
 	 */
 	public function CMSTreeClasses() {
-		$classes = sprintf('class-%s', $this->class);
+		$classes = sprintf('class-%s', static::class);
 
 		if(!$this->canDelete()) {
 			$classes .= " nodelete";

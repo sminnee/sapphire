@@ -45,7 +45,7 @@ trait CustomMethods {
 	public function __call($method, $arguments) {
 		// If the method cache was cleared by an an Object::add_extension() / Object::remove_extension()
 		// call, then we should rebuild it.
-        $class = get_class($this);
+        $class = static::class;
 		if(!array_key_exists($class, self::$extra_methods)) {
 			$this->defineMethods();
 		}
@@ -150,7 +150,7 @@ trait CustomMethods {
 	 * @return array List of custom method details, if defined for this method
 	 */
 	protected function getExtraMethodConfig($method) {
-		$class = get_class($this);
+		$class = static::class;
 		if(isset(self::$extra_methods[$class][strtolower($method)])) {
 			return self::$extra_methods[$class][strtolower($method)];
 		}
@@ -164,7 +164,7 @@ trait CustomMethods {
 	 * @return array
 	 */
 	public function allMethodNames($custom = false) {
-		$class = get_class($this);
+		$class = static::class;
 		if(!isset(self::$built_in_methods[$class])) {
 			self::$built_in_methods[$class] = array_map('strtolower', get_class_methods($this));
 		}
@@ -190,10 +190,10 @@ trait CustomMethods {
 				$extension->clearOwner();
 			}
 		} else {
-			if (!isset(self::$built_in_methods[$extension->class])) {
-				self::$built_in_methods[$extension->class] = array_map('strtolower', get_class_methods($extension));
+			if (!isset(self::$built_in_methods[get_class($extension)])) {
+				self::$built_in_methods[get_class($extension)] = array_map('strtolower', get_class_methods($extension));
 			}
-			$methods = self::$built_in_methods[$extension->class];
+			$methods = self::$built_in_methods[get_class($extension)];
 		}
 
 		return $methods;
@@ -207,7 +207,7 @@ trait CustomMethods {
 	 * @throws InvalidArgumentException
 	 */
 	protected function addMethodsFrom($property, $index = null) {
-		$class = get_class($this);
+		$class = static::class;
 		$extension = ($index !== null) ? $this->{$property}[$index] : $this->$property;
 
 		if (!$extension) {
@@ -243,7 +243,7 @@ trait CustomMethods {
 	 */
 	protected function removeMethodsFrom($property, $index = null) {
 		$extension = ($index !== null) ? $this->{$property}[$index] : $this->$property;
-		$class = get_class($this);
+		$class = static::class;
 
 		if (!$extension) {
 			throw new InvalidArgumentException(
@@ -275,7 +275,7 @@ trait CustomMethods {
 	 * @param string $wrap the method name to wrap to
 	 */
 	protected function addWrapperMethod($method, $wrap) {
-		$class = get_class($this);
+		$class = static::class;
 		self::$extra_methods[$class][strtolower($method)] = array (
 			'wrap'   => $wrap,
 			'method' => $method
@@ -291,7 +291,7 @@ trait CustomMethods {
 	 *        function
 	 */
 	protected function createMethod($method, $code) {
-		$class = get_class($this);
+		$class = static::class;
 		self::$extra_methods[$class][strtolower($method)] = array (
 			'function' => create_function('$obj, $args', $code)
 		);

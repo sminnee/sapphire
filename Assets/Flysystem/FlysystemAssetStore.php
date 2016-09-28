@@ -330,7 +330,7 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable {
 	protected function truncateDirectory($dirname, Filesystem $filesystem) {
 		if ($dirname
 			&& ltrim(dirname($dirname), '.')
-			&& ! Config::inst()->get(get_class($this), 'keep_empty_dirs')
+			&& ! Config::inst()->get(static::class, 'keep_empty_dirs')
 			&& ! $filesystem->listContents($dirname)
 		) {
 			$filesystem->deleteDir($dirname);
@@ -582,7 +582,7 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable {
 	 * @return bool
 	 */
 	protected function useLegacyFilenames() {
-		return Config::inst()->get(get_class($this), 'legacy_filenames');
+		return Config::inst()->get(static::class, 'legacy_filenames');
 	}
 
 	public function getMetadata($filename, $hash, $variant = null) {
@@ -818,7 +818,7 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable {
 
 		// Add headers
 		$response->addHeader('Content-Type', $mime);
-		$headers = Config::inst()->get(get_class($this), 'file_response_headers');
+		$headers = Config::inst()->get(static::class, 'file_response_headers');
 		foreach($headers as $header => $value) {
 			$response->addHeader($header, $value);
 		}
@@ -831,7 +831,7 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable {
 	 * @return HTTPResponse
 	 */
 	protected function createDeniedResponse() {
-		$code = (int)Config::inst()->get(get_class($this), 'denied_response_code');
+		$code = (int)Config::inst()->get(static::class, 'denied_response_code');
 		return $this->createErrorResponse($code);
 	}
 
@@ -841,7 +841,7 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable {
 	 * @return HTTPResponse
 	 */
 	protected function createMissingResponse() {
-		$code = (int)Config::inst()->get(get_class($this), 'missing_response_code');
+		$code = (int)Config::inst()->get(static::class, 'missing_response_code');
 		return $this->createErrorResponse($code);
 	}
 

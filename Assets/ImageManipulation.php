@@ -220,7 +220,7 @@ trait ImageManipulation {
 	 */
 	public function updateURL(&$url) {
 		// Skip if resampling is off, or is already resampled, or is not an image
-		if(!Config::inst()->get(get_class($this), 'force_resample') || $this->getVariant() || !$this->getIsImage()) {
+		if(!Config::inst()->get(static::class, 'force_resample') || $this->getVariant() || !$this->getIsImage()) {
 			return;
 		}
 
@@ -463,8 +463,8 @@ trait ImageManipulation {
 	 * @return DBFile|DBHTMLText Either a resized thumbnail, or html for a thumbnail icon
 	 */
 	public function CMSThumbnail() {
-		$width = (int)Config::inst()->get(get_class($this), 'cms_thumbnail_width');
-		$height = (int)Config::inst()->get(get_class($this), 'cms_thumbnail_height');
+		$width = (int)Config::inst()->get(static::class, 'cms_thumbnail_width');
+		$height = (int)Config::inst()->get(static::class, 'cms_thumbnail_height');
 		return $this->ThumbnailIcon($width, $height);
 	}
 
@@ -474,8 +474,8 @@ trait ImageManipulation {
 	 * @return AssetContainer|DBHTMLText Either a resized thumbnail, or html for a thumbnail icon
 	 */
 	public function StripThumbnail() {
-		$width = (int)Config::inst()->get(get_class($this), 'strip_thumbnail_width');
-		$height = (int)Config::inst()->get(get_class($this), 'strip_thumbnail_height');
+		$width = (int)Config::inst()->get(static::class, 'strip_thumbnail_width');
+		$height = (int)Config::inst()->get(static::class, 'strip_thumbnail_height');
 		return $this->ThumbnailIcon($width, $height);
 	}
 
@@ -485,7 +485,7 @@ trait ImageManipulation {
 	 * @return AssetContainer|DBHTMLText Either a resized thumbnail, or html for a thumbnail icon
 	 */
 	public function PreviewThumbnail() {
-		$width = (int)Config::inst()->get(get_class($this), 'asset_preview_width');
+		$width = (int)Config::inst()->get(static::class, 'asset_preview_width');
 		return $this->ScaleMaxWidth($width)  ?: $this->IconTag();
 	}
 

@@ -57,7 +57,7 @@ abstract class BuildTask extends Object {
 	 * @return string
 	 */
 	public function getTitle() {
-		return ($this->title) ? $this->title : $this->class;
+		return ($this->title) ? $this->title : static::class;
 	}
 
 	/**

@@ -43,14 +43,14 @@ class ViewableData_Debugger extends ViewableData
 	{
 		// debugging info for a specific field
 		if ($field) {
-			return "<b>Debugging Information for {$this->class}->{$field}</b><br/>" .
+			return "<b>Debugging Information for " . static::class . "->{$field}</b><br/>" .
 			($this->object->hasMethod($field) ? "Has method '$field'<br/>" : null) .
 			($this->object->hasField($field) ? "Has field '$field'<br/>" : null);
 		}
 
 		// debugging information for the entire class
 		$reflector = new ReflectionObject($this->object);
-		$debug = "<b>Debugging Information: all methods available in '{$this->object->class}'</b><br/><ul>";
+		$debug = "<b>Debugging Information: all methods available in '" . get_class($this->object) . "'</b><br/><ul>";
 
 		foreach ($this->object->allMethodNames() as $method) {
 			// check that the method is public
@@ -74,7 +74,7 @@ class ViewableData_Debugger extends ViewableData
 		$debug .= '</ul>';
 
 		if ($this->object->hasMethod('toMap')) {
-			$debug .= "<b>Debugging Information: all fields available in '{$this->object->class}'</b><br/><ul>";
+			$debug .= "<b>Debugging Information: all fields available in '" . get_class($this->object) . "'</b><br/><ul>";
 
 			foreach ($this->object->toMap() as $field => $value) {
 				$debug .= "<li>\$$field</li>";

@@ -135,7 +135,7 @@ class UploadField_SelectHandler extends RequestHandler
 		));
 
 		// Set configurable pagination for file list field
-		$pageSize = Config::inst()->get(get_class($this), 'page_size');
+		$pageSize = Config::inst()->get(static::class, 'page_size');
 		$config->addComponent(new GridFieldPaginator($pageSize));
 
 		// If relation is to be autoset, we need to make sure we only list compatible objects.

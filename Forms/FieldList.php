@@ -94,7 +94,7 @@ class FieldList extends ArrayList {
 				$name = $field->getName();
 				if(isset($list[$name])) {
 					if($this->form) {
-						$errSuffix = " in your '{$this->form->class}' form called '" . $this->form->Name() . "'";
+						$errSuffix = " in your '" . get_class($this->form) . "' form called '" . $this->form->Name() . "'";
 					} else {
 						$errSuffix = '';
 					}
@@ -318,7 +318,7 @@ class FieldList extends ArrayList {
 						? " named '{$parentPointer->getName()}'"
 						: null;
 					user_error("FieldList::addFieldToTab() Tried to add a tab to object"
-						. " '{$parentPointer->class}'{$withName} - '$part' didn't exist.", E_USER_ERROR);
+						. " '" . get_class($parentPointer) . "'{$withName} - '$part' didn't exist.", E_USER_ERROR);
 				}
 			}
 		}
@@ -348,7 +348,8 @@ class FieldList extends ArrayList {
 					if($child instanceof CompositeField) {
 						return $child->fieldByName($remainder);
 					} else {
-						user_error("Trying to get field '$remainder' from non-composite field $child->class.$name",
+						user_error("Trying to get field '$remainder' from non-composite field " .
+							get_class($child) . ".$name",
 							E_USER_WARNING);
 						return null;
 					}

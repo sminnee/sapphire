@@ -54,7 +54,7 @@ class HTMLEditorField_Toolbar extends RequestHandler
 	 */
 	public function getTemplateViewFile()
 	{
-		return SSViewer::get_templates_by_class(get_class($this), '_viewfile', __CLASS__);
+		return SSViewer::get_templates_by_class(static::class, '_viewfile', __CLASS__);
 	}
 
 	/**
