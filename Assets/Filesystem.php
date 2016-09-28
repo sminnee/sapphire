@@ -11,7 +11,9 @@ use SilverStripe\Security\Security;
 /**
  * A collection of static methods for manipulating the filesystem.
  */
-class Filesystem extends Object {
+class Filesystem {
+
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * @config

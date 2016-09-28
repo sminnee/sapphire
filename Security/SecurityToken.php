@@ -34,7 +34,7 @@ use SilverStripe\View\TemplateGlobalProvider;
  *
  * @todo Make token name form specific for additional forgery protection.
  */
-class SecurityToken extends Object implements TemplateGlobalProvider {
+class SecurityToken implements TemplateGlobalProvider {
 
 	/**
 	 * @var string
@@ -61,7 +61,6 @@ class SecurityToken extends Object implements TemplateGlobalProvider {
 	 */
 	public function __construct($name = null) {
 		$this->name = ($name) ? $name : self::get_default_name();
-		parent::__construct();
 	}
 
 	/**

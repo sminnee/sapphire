@@ -34,7 +34,7 @@ use Exception;
 *
 * @see http://doc.silverstripe.com/doku.php?id=searchcontext
 */
-class SearchContext extends Object {
+class SearchContext {
 
 	/**
 	 * DataObject subclass to which search parameters relate to.
@@ -83,8 +83,6 @@ class SearchContext extends Object {
 		$this->modelClass = $modelClass;
 		$this->fields = ($fields) ? $fields : new FieldList();
 		$this->filters = ($filters) ? $filters : array();
-
-		parent::__construct();
 	}
 
 	/**

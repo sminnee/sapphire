@@ -18,7 +18,7 @@ use SilverStripe\Dev\Debug;
  *
  * To actually perform the transformation, call $form->transform(new MyTransformation());
  */
-class FormTransformation extends Object {
+class FormTransformation {
 	public function transform(FormField $field) {
 		// Look for a performXXTransformation() method on the field itself.
 		// performReadonlyTransformation() is a pretty commonly applied method.

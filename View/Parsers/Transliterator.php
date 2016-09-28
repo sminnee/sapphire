@@ -14,7 +14,11 @@ use SilverStripe\Core\Object;
  * $ascii = $tr->toASCII($unicode);
  * </code>
  */
-class Transliterator extends Object {
+class Transliterator {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
+
 	/**
 	 * @config
 	 * @var boolean Allow the use of iconv() to perform transliteration.  Set to false to disable.

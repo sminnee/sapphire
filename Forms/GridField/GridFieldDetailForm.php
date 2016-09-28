@@ -12,6 +12,7 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\Validator;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Core\CustomMethods;
 use Closure;
 
 /**
@@ -110,7 +111,7 @@ class GridFieldDetailForm implements GridField_URLHandler {
 		if(!$this->getValidator()
 			&& (
 				method_exists($record, 'getCMSValidator')
-				|| $record instanceof Object && $record->hasMethod('getCMSValidator')
+				|| $record instanceof CustomMethods && $record->hasMethod('getCMSValidator')
 			)
 		) {
 			$this->setValidator($record->getCMSValidator());

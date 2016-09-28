@@ -12,7 +12,7 @@ use SilverStripe\Core\Object;
  *
  * @author Ingo Schommer, Silverstripe Ltd. (<firstname>@silverstripe.com)
  */
-class SQLFormatter extends Object {
+class SQLFormatter {
 
 	protected static $newline_before_tokens = array(
 		'SELECT',

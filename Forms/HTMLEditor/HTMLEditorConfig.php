@@ -22,7 +22,10 @@ use SilverStripe\Core\Object;
  *
  * @author "Hamish Friedlander" <hamish@silverstripe.com>
  */
-abstract class HTMLEditorConfig extends Object {
+abstract class HTMLEditorConfig {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * Array of registered configurations

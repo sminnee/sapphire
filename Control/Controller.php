@@ -12,6 +12,7 @@ use SilverStripe\Security\BasicAuth;
 use SilverStripe\Security\Member;
 use SilverStripe\View\SSViewer;
 use SilverStripe\View\TemplateGlobalProvider;
+use SilverStripe\Core\CustomMethods;
 
 /**
  * Controllers are the cornerstone of all site functionality in SilverStripe. The {@link Director}
@@ -243,7 +244,7 @@ class Controller extends RequestHandler implements TemplateGlobalProvider {
 
 		}
 		else {
-			if ($response instanceof Object && $response->hasMethod('getViewer')) {
+			if ($response instanceof CustomMethods && $response->hasMethod('getViewer')) {
 				if (isset($_REQUEST['debug_request'])) {
 					Debug::message(
 						"Request handler " . get_class($response) . " object to " . static::class . " controller;"

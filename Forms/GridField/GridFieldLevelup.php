@@ -14,7 +14,7 @@ use SilverStripe\View\SSViewer;
  * hierarchical data. Requires the managed record to have a "getParent()"
  * method or has_one relationship called "Parent".
  */
-class GridFieldLevelup extends Object implements GridField_HTMLProvider {
+class GridFieldLevelup implements GridField_HTMLProvider {
 
 	/**
 	 * @var integer - the record id of the level up to

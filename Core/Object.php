@@ -257,7 +257,6 @@ abstract class Object {
 	}
 
 	public function __construct() {
-		$this->class = get_class($this);
 		$this->constructExtensions();
 	}
 
@@ -296,7 +295,7 @@ abstract class Object {
 	 * @return string the class name
 	 */
 	public function __toString() {
-		return $this->class;
+		return static::class;
 	}
 
 }

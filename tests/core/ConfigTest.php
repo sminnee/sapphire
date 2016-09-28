@@ -8,7 +8,10 @@ use SilverStripe\Dev\Deprecation;
 use SilverStripe\Dev\SapphireTest;
 
 
-class ConfigTest_DefinesFoo extends Object implements TestOnly {
+class ConfigTest_DefinesFoo implements TestOnly {
+
+	use \SilverStripe\Core\Config\Configurable;
+
 	protected static $foo = 1;
 
 	private static $not_foo = 1;
@@ -84,7 +87,7 @@ class ConfigStaticTest_Combined3 extends ConfigStaticTest_Combined2 {
 	private static $second = array('test_3');
 }
 
-class ConfigTest_TestNest extends Object implements TestOnly {
+class ConfigTest_TestNest implements TestOnly {
 	/** @config */
 	private static $foo = 3;
 	/** @config */

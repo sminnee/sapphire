@@ -12,8 +12,11 @@ use SilverStripe\Core\Object;
  * A basic HTML wrapper for stylish rendering of a developement info view.
  * Used to output error messages, and test results.
  */
-class DebugView extends Object
+class DebugView
 {
+
+	use \SilverStripe\Core\Config\Configurable;
+
 
 	/**
 	 * Column size to wrap long strings to

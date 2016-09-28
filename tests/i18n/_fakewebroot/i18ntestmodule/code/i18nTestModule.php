@@ -19,7 +19,7 @@ class i18nTestModule extends DataObject implements TestOnly {
 		);
 	}
 }
-class i18nTestModule_Addition extends Object {
+class i18nTestModule_Addition {
 	public function myAdditionalMethod() {
 		_t('i18nTestModule.ADDITION','Addition');
 	}

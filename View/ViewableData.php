@@ -24,7 +24,11 @@ use ArrayIterator;
  * is provided and automatically escaped by ViewableData. Any class that needs to be available to a view (controllers,
  * {@link DataObject}s, page controls) should inherit from this class.
  */
-class ViewableData extends Object implements IteratorAggregate {
+class ViewableData implements IteratorAggregate {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
+	use \SilverStripe\Core\Extensible;
 
 	/**
 	 * An array of objects to cast certain fields to. This is set up as an array in the format:
@@ -74,6 +78,28 @@ class ViewableData extends Object implements IteratorAggregate {
 	 * @var array
 	 */
 	private $objCache = array();
+
+	/**
+	 * Create a new ViewableData object
+	 */
+	public function __construct() {
+		if($this->failover && !is_object($this->failover)) {
+			throw new LogicException("ViewableData::\$failover set to a non-object");
+		}
+
+		if($this->failover) {
+			// Register this trait as a method source
+			$this->registerExtraMethodCallback('defineFailoverMethods', function() {
+				$this->addMethodsFrom('failover');
+
+				if(isset($_REQUEST['debugfailover'])) {
+					Debug::message(static::class . " created with a failover class of " . get_class($this->failover));
+				}
+			});
+		}
+
+		$this->constructExtensions();
+	}
 
 	// -----------------------------------------------------------------------------------------------------------------
 
@@ -181,27 +207,6 @@ class ViewableData extends Object implements IteratorAggregate {
 	}
 
 	// -----------------------------------------------------------------------------------------------------------------
-
-	/**
-	 * Add methods from the {@link ViewableData::$failover} object, as well as wrapping any methods prefixed with an
-	 * underscore into a {@link ViewableData::cachedCall()}.
-	 *
-	 * @throws LogicException
-	 */
-	public function defineMethods() {
-		if($this->failover && !is_object($this->failover)) {
-			throw new LogicException("ViewableData::\$failover set to a non-object");
-		}
-		if($this->failover) {
-			$this->addMethodsFrom('failover');
-
-			if(isset($_REQUEST['debugfailover'])) {
-				Debug::message("$this->class created with a failover class of {$this->failover->class}");
-			}
-		}
-
-		parent::defineMethods();
-	}
 
 	/**
 	 * Merge some arbitrary data in with this object. This method returns a {@link ViewableData_Customised} instance
@@ -477,6 +482,26 @@ class ViewableData extends Object implements IteratorAggregate {
 		}
 
 		return $result;
+	}
+
+
+	/**
+	 * Return true if this object "exists" i.e. has a sensible value
+	 *
+	 * This method should be overriden in subclasses to provide more context about the classes state. For example, a
+	 * {@link DataObject} class could return false when it is deleted from the database
+	 *
+	 * @return bool
+	 */
+	public function exists() {
+		return true;
+	}
+
+	/**
+	 * @return string the class name
+	 */
+	public function __toString() {
+		return static::class;
 	}
 
 	// ITERATOR SUPPORT ------------------------------------------------------------------------------------------------

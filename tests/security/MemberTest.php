@@ -1414,7 +1414,6 @@ class MemberTest_EditingAllowedDeletingDeniedExtension extends DataExtension imp
  */
 class MemberTest_PasswordValidator extends PasswordValidator {
 	public function __construct() {
-		parent::__construct();
 		$this->minLength(7);
 		$this->checkHistoricalPasswords(6);
 		$this->characterStrength(3, array('lowercase','uppercase','digits','punctuation'));

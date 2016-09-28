@@ -23,7 +23,7 @@ use SilverStripe\ORM\FieldType\DBField;
  *     class: EndsWithFilter
  * </code>
  */
-abstract class SearchFilter extends Object {
+abstract class SearchFilter {
 
 	/**
 	 * @var string Classname of the inspected {@link DataObject}
@@ -66,7 +66,6 @@ abstract class SearchFilter extends Object {
 	 * @param array $modifiers
 	 */
 	public function __construct($fullName = null, $value = false, array $modifiers = array()) {
-		parent::__construct();
 		$this->fullName = $fullName;
 
 		// sets $this->name and $this->relation

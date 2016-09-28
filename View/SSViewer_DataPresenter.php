@@ -300,7 +300,7 @@ class SSViewer_DataPresenter extends SSViewer_Scope
 		if ($val) {
 			$obj = $val['obj'];
 			if ($name === 'hasValue') {
-				$res = $obj instanceof Object
+				$res = $obj instanceof ViewableData
 					? $obj->exists()
 					: (bool)$obj;
 			} else {

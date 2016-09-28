@@ -11,7 +11,7 @@ use SilverStripe\ORM\DataObject;
  * @uses DBField::scaffoldFormField()
  * @uses DataObject::fieldLabels()
  */
-class FormScaffolder extends Object {
+class FormScaffolder {
 
 	/**
 	 * @var DataObject $obj The object defining the fields to be scaffolded
@@ -56,7 +56,6 @@ class FormScaffolder extends Object {
 	 */
 	public function __construct($obj) {
 		$this->obj = $obj;
-		parent::__construct();
 	}
 
 	/**

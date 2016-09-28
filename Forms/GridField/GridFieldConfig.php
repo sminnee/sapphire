@@ -22,7 +22,10 @@ use SilverStripe\Core\Object;
  * - {@link GridFieldConfig_RecordEditor}
  * - {@link GridFieldConfig_RelationEditor}
  */
-class GridFieldConfig extends Object {
+class GridFieldConfig {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Extensible;
 
 	/**
 	 * @var ArrayList
@@ -34,8 +37,8 @@ class GridFieldConfig extends Object {
 	 *
 	 */
 	public function __construct() {
-		parent::__construct();
 		$this->components = new ArrayList();
+		$this->constructExtensions();
 	}
 
 	/**

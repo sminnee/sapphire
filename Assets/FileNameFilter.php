@@ -28,7 +28,10 @@ use SilverStripe\View\Parsers\Transliterator;
  *
  * See {@link URLSegmentFilter} for a more generic implementation.
  */
-class FileNameFilter extends Object {
+class FileNameFilter {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * @config

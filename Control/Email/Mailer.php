@@ -11,7 +11,9 @@ use SilverStripe\Core\Object;
  * Mailer objects are responsible for actually sending emails.
  * The default Mailer class will use PHP's mail() function.
  */
-class Mailer extends Object {
+class Mailer {
+
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * Default encoding type for messages. Available options are:

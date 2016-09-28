@@ -13,8 +13,11 @@ use SilverStripe\View\Requirements;
  *
  * Caution: This API is highly volatile, and might change without prior deprecation.
  */
-class DateField_View_JQuery extends Object
+class DateField_View_JQuery
 {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
 
 	protected $field;
 
@@ -44,7 +47,6 @@ class DateField_View_JQuery extends Object
 	 */
 	public function __construct($field)
 	{
-		parent::__construct();
 		$this->field = $field;
 	}
 

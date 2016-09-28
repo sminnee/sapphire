@@ -34,7 +34,7 @@ use ReflectionClass;
  * @uses i18nEntityProvider
  * @uses i18n
  */
-class i18nTextCollector extends Object {
+class i18nTextCollector {
 
 	/**
 	 * Default (master) locale
@@ -81,8 +81,6 @@ class i18nTextCollector extends Object {
 			: i18n::get_lang_from_locale(i18n::config()->get('default_locale'));
 		$this->basePath = Director::baseFolder();
 		$this->baseSavePath = Director::baseFolder();
-
-		parent::__construct();
 	}
 
 	/**

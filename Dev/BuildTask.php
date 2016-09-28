@@ -12,7 +12,7 @@ use SilverStripe\Core\Object;
  * To disable the task (in the case of potentially destructive updates or deletes), declare
  * the $Disabled property on the subclass.
  */
-abstract class BuildTask extends Object {
+abstract class BuildTask {
 
 	/**
 	 * Set a custom url segment (to follow dev/tasks/)

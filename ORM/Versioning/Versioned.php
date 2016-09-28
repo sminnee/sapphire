@@ -252,8 +252,6 @@ class Versioned extends DataExtension implements TemplateGlobalProvider {
 	 * @var string $mode One of "StagedVersioned" or "Versioned".
 	 */
 	public function __construct($mode = self::STAGEDVERSIONED) {
-		parent::__construct();
-
 		// Handle deprecated behaviour
 		if($mode === 'Stage' && func_num_args() === 1) {
 			Deprecation::notice("5.0", "Versioned now takes a mode as a single parameter");

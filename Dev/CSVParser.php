@@ -33,7 +33,7 @@ use SilverStripe\Control\Director;
  * }
  * </code>
  */
-class CSVParser extends Object implements Iterator {
+class CSVParser implements Iterator {
 
 	/**
 	 * @var string $filename
@@ -117,8 +117,6 @@ class CSVParser extends Object implements Iterator {
 		$this->filename = $filename;
 		$this->delimiter = $delimiter;
 		$this->enclosure = $enclosure;
-
-		parent::__construct();
 	}
 
 	/**

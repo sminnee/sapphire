@@ -586,8 +586,8 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	 * Create a new instance of a different class from this object's record.
 	 * This is useful when dynamically changing the type of an instance. Specifically,
 	 * it ensures that the instance of the class is a match for the className of the
-	 * record. Don't set the {@link DataObject->class} or {@link DataObject->ClassName}
-	 * property manually before calling this method, as it will confuse change detection.
+	 * record. Don't set the {@link DataObject->ClassName} property manually before
+	 * calling this method, as it will confuse change detection.
 	 *
 	 * If the new class is different to the original class, defaults are populated again
 	 * because this will only occur automatically on instantiation of a DataObject if
@@ -625,17 +625,6 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 	public function defineMethods() {
 		parent::defineMethods();
 
-		// Define the extra db fields - this is only necessary for extensions added in the
-		// class definition.  Object::add_extension() will call this at definition time for
-		// those objects, which is a better mechanism.  Perhaps extensions defined inside the
-		// class def can somehow be applied at definiton time also?
-		if($this->extension_instances) foreach($this->extension_instances as $i => $instance) {
-			if(!$instance->class) {
-				$class = get_class($instance);
-				user_error("DataObject::defineMethods(): Please ensure {$class}::__construct() calls"
-					. " parent::__construct()", E_USER_ERROR);
-			}
-		}
 		if(static::class == 'SilverStripe\ORM\DataObject') return;
 
 		// Set up accessors for joined items

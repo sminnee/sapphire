@@ -9,7 +9,10 @@ use SilverStripe\Core\Object;
  * fields. It relies on javascript for client-side validation, and marking fields after server-side
  * validation. It acts as a visitor to individual form fields.
  */
-abstract class Validator extends Object {
+abstract class Validator {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * @var Form $form

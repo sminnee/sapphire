@@ -7,7 +7,7 @@ use SilverStripe\Core\Object;
 /**
  * Base class for HTML cleaning implementations.
  */
-abstract class HTMLCleaner extends Object {
+abstract class HTMLCleaner {
 
 	/**
 	 * @var array

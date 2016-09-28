@@ -19,7 +19,7 @@ use SilverStripe\ORM\Versioning\Versioned;
  * 	_t('CMSBatchActions.PUBLISHED_PAGES', 'published %d pages')));
  * </code>
  */
-abstract class CMSBatchAction extends Object {
+abstract class CMSBatchAction {
 
 	protected $managedClass = 'SilverStripe\\CMS\\Model\\SiteTree';
 

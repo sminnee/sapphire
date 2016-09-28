@@ -31,8 +31,6 @@ class RequiredFields extends Validator {
 		} else {
 			$this->required = array();
 		}
-
-		parent::__construct();
 	}
 
 	/**

@@ -17,7 +17,9 @@ use SilverStripe\ORM\ValidationResult;
  * Member::set_password_validator($pwdValidator);
  * </code>
  */
-class PasswordValidator extends Object {
+class PasswordValidator {
+
+	use \SilverStripe\Core\Config\Configurable;
 
 	private static $character_strength_tests = array(
 		'lowercase' => '/[a-z]/',

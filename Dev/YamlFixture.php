@@ -68,7 +68,9 @@ use InvalidArgumentException;
  *      ErrorCode: 404
  * </code>
  */
-class YamlFixture extends Object {
+class YamlFixture {
+
+	use \SilverStripe\Core\Injector\Injectable;
 
 	/**
 	 * Absolute path to the .yml fixture file
@@ -100,8 +102,6 @@ class YamlFixture extends Object {
 
 			$this->fixtureFile = $fixture;
 		}
-
-		parent::__construct();
 	}
 
 	/**

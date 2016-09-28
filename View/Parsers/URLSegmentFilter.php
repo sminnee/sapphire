@@ -14,7 +14,10 @@ use SilverStripe\Core\Object;
  *
  * See {@link FileNameFilter} for similar implementation for filesystem-based URLs.
  */
-class URLSegmentFilter extends Object {
+class URLSegmentFilter {
+
+	use \SilverStripe\Core\Injector\Injectable;
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * @config

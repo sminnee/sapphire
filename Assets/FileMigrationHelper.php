@@ -13,7 +13,7 @@ use SilverStripe\ORM\Versioning\Versioned;
  *
  * This service does not alter these records in such a way that prevents downgrading back to 3.x
  */
-class FileMigrationHelper extends Object {
+class FileMigrationHelper {
 
 	/**
 	 * Perform migration

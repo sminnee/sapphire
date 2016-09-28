@@ -14,7 +14,9 @@ use Zend_Cache_Core;
 /**
  * A wrapper class for GD-based images, with lots of manipulation functions.
  */
-class GDBackend extends Object implements Image_Backend, Flushable {
+class GDBackend implements Image_Backend, Flushable {
+
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * GD Resource
@@ -63,7 +65,6 @@ class GDBackend extends Object implements Image_Backend, Flushable {
 	private static $image_interlace = 0;
 
 	public function __construct(AssetContainer $assetContainer = null) {
-		parent::__construct();
 		$this->cache = Cache::factory('GDBackend_Manipulations');
 
 		if($assetContainer) {

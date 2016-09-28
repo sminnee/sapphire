@@ -27,7 +27,7 @@ use ArrayIterator;
  * Additional CMSMenu items can be added through {@link LeftAndMainExtension::init()}
  * extensions added to {@link LeftAndMain}.
  */
-class CMSMenu extends Object implements IteratorAggregate, i18nEntityProvider {
+class CMSMenu implements IteratorAggregate, i18nEntityProvider {
 
 	/**
 	 * Sort by menu priority, highest to lowest

@@ -8,7 +8,10 @@ use SilverStripe\Core\Object;
  * A class that combined as a boolean result with an optional list of error messages.
  * This is used for returning validation results from validators
  */
-class ValidationResult extends Object {
+class ValidationResult {
+
+	use \SilverStripe\Core\Injector\Injectable;
+
 	/**
 	 * Boolean - is the result valid or not
 	 */
@@ -30,7 +33,6 @@ class ValidationResult extends Object {
 	public function __construct($valid = true, $message = null) {
 		$this->isValid = $valid;
 		if($message) $this->errorList[] = $message;
-		parent::__construct();
 	}
 
 	/**

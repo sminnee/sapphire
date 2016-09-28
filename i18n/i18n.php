@@ -79,7 +79,9 @@ require_once 'Zend/Translate.php';
  *
  * @author Bernat Foj Capell <bernat@silverstripe.com>
  */
-class i18n extends Object implements TemplateGlobalProvider, Flushable {
+class i18n implements TemplateGlobalProvider, Flushable {
+
+	use \SilverStripe\Core\Config\Configurable;
 
 	/**
 	 * This static variable is used to store the current defined locale.

@@ -14,7 +14,7 @@ use SilverStripe\Forms\Form;
  *
  * @author Markus Lanthaler <markus@silverstripe.com>
  */
-abstract class Authenticator extends Object {
+abstract class Authenticator {
 
 	/**
 	 * This variable holds all authenticators that should be used

@@ -16,7 +16,9 @@ use DOMElement;
  *
  * @see http://doc.silverstripe.org/framework/en/reference/shortcodes
  */
-class ShortcodeParser extends Object {
+class ShortcodeParser {
+
+	use \SilverStripe\Core\Injector\Injectable;
 
 	public function img_shortcode($attrs) {
 		return "<img src='".$attrs['src']."'>";

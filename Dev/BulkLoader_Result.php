@@ -15,8 +15,10 @@ use SilverStripe\View\ArrayData;
  *
  * @author Ingo Schommer, Silverstripe Ltd. (<firstname>@silverstripe.com)
  */
-class BulkLoader_Result extends Object
+class BulkLoader_Result
 {
+
+	use \SilverStripe\Core\Injector\Injectable;
 
 	/**
 	 * Stores a map of ID and ClassNames
