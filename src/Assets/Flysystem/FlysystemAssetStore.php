@@ -666,12 +666,12 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable
         // Flysystem defaults to use_existing
         switch ($conflictResolution) {
             // Throw tantrum
-            case static::CONFLICT_EXCEPTION: {
+            case static::CONFLICT_EXCEPTION:
                 throw new InvalidArgumentException("File already exists at path {$fileID}");
-            }
+                break;
 
             // Rename
-            case static::CONFLICT_RENAME: {
+            case static::CONFLICT_RENAME:
                 foreach ($this->fileGeneratorFor($fileID) as $candidate) {
                     if (!$this->getFilesystemFor($candidate)) {
                         return $candidate;
@@ -679,13 +679,13 @@ class FlysystemAssetStore implements AssetStore, AssetStoreRouter, Flushable
                 }
 
                 throw new InvalidArgumentException("File could not be renamed with path {$fileID}");
-            }
+                break;
 
             // Use existing file
             case static::CONFLICT_USE_EXISTING:
-            default: {
+            default:
                 return false;
-            }
+                break;
         }
     }
 

@@ -331,13 +331,13 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
 
         // Adjust query based on original selection criterea
         switch ($params['Versioned.mode']) {
-            case 'all_versions': {
+            case 'all_versions':
                 // Versioned.mode === all_versions doesn't inherit very well, so default to stage
                 $params['Versioned.mode'] = 'stage';
                 $params['Versioned.stage'] = static::DRAFT;
                 break;
-            }
-            case 'version': {
+
+            case 'version':
                 // If we selected this object from a specific version, we need
                 // to find the date this version was published, and ensure
                 // inherited queries select from that date.
@@ -355,7 +355,6 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
                     $params['Versioned.stage'] = static::DRAFT;
                 }
                 break;
-            }
         }
     }
 
@@ -460,7 +459,7 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
 
                     // Add additional versioning filters
                 switch ($versionedMode) {
-                    case 'archive': {
+                    case 'archive':
                         $date = $dataQuery->getQueryParam('Versioned.date');
                         if (!$date) {
                             throw new InvalidArgumentException("Invalid archive date");
@@ -480,8 +479,8 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
 						)" => $date
                         ]);
                         break;
-                    }
-                    case 'latest_versions': {
+
+                    case 'latest_versions':
                         // Return latest version instances, regardless of whether they are on a particular stage
                         // This provides "show all, including deleted" functonality
                         $query->addWhere(
@@ -497,8 +496,8 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
 						)"
                         );
                         break;
-                    }
-                    case 'version': {
+
+                    case 'version':
                         // If selecting a specific version, filter it here
                         $version = $dataQuery->getQueryParam('Versioned.version');
                         if (!$version) {
@@ -508,13 +507,12 @@ class Versioned extends DataExtension implements TemplateGlobalProvider
                             "\"{$baseTable}_Versions\".\"Version\"" => $version
                         ]);
                         break;
-                    }
+
                     case 'all_versions':
-                    default: {
+                    default:
                         // If all versions are requested, ensure that records are sorted by this field
                         $query->addOrderBy(sprintf('"%s_Versions"."%s"', $baseTable, 'Version'));
                         break;
-                    }
                 }
                 break;
             default:

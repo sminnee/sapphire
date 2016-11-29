@@ -60,7 +60,7 @@ trait CustomMethods
         }
 
         switch (true) {
-            case isset($config['property']) : {
+            case isset($config['property']):
                 $obj = $config['index'] !== null ?
                     $this->{$config['property']}[$config['index']] :
                     $this->{$config['property']};
@@ -88,15 +88,16 @@ trait CustomMethods
                         . ' Perhaps this object was mistakenly destroyed?'
                     );
                 }
-            }
+                break;
+
             case isset($config['wrap']):
                 array_unshift($arguments, $config['method']);
                 return call_user_func_array(array($this, $config['wrap']), $arguments);
 
-                case isset($config['function']):
+            case isset($config['function']):
                 return $config['function']($this, $arguments);
 
-                default:
+            default:
                 throw new BadMethodCallException(
                     "Object->__call(): extra method $method is invalid on $class:"
                         . var_export($config, true)

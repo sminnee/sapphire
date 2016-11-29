@@ -1049,9 +1049,9 @@ class File extends DataObject implements ShortcodeHandler, AssetContainer, Thumb
     {
         switch (strtolower(substr(trim($iniValue), -1))) {
             case 'g':
-                $iniValue *= 1024;
+                $iniValue *= 1024; // flow to next step
             case 'm':
-                $iniValue *= 1024;
+                $iniValue *= 1024; // and flow to next step
             case 'k':
                 $iniValue *= 1024;
         }

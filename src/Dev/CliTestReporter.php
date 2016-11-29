@@ -29,22 +29,21 @@ class CliTestReporter extends SapphireTestReporter
             foreach ($suite['tests'] as $test) {
                 $testCount++;
                 switch ($test['status']) {
-                    case TEST_INCOMPLETE: {
+                    case TEST_INCOMPLETE:
                         $incompleteCount++;
                         break;
-                    }
-                    case TEST_SUCCESS: {
+
+                    case TEST_SUCCESS:
                         $passCount++;
                         break;
-                    }
-                    case TEST_ERROR: {
+
+                    case TEST_ERROR:
                         $errorCount++;
                         break;
-                    }
-                    default: {
+
+                    default:
                         $failCount++;
                         break;
-                    }
                 }
             }
         }

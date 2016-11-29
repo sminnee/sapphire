@@ -1757,7 +1757,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
         // Check the relation type to mock
         $relationType = $remote->getRelationType($remoteRelation);
         switch ($relationType) {
-            case 'has_one': {
+            case 'has_one':
                 // Mock has_many
                 $joinField = "{$remoteRelation}ID";
                 $componentClass = $schema->classForField($remoteClass, $joinField);
@@ -1768,9 +1768,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
                 return $result
                     ->setDataQueryParam($this->getInheritableQueryParams())
                     ->forForeignID($this->ID);
-            }
+
             case 'belongs_to':
-            case 'has_many': {
+            case 'has_many':
                 // These relations must have a has_one on the other end, so find it
                 $joinField = $schema->getRemoteJoinField($remoteClass, $remoteRelation, $relationType, $polymorphic);
                 if ($polymorphic) {
@@ -1791,9 +1791,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
                     ->filter('ID', $joinID)
                     ->setDataQueryParam($this->getInheritableQueryParams())
                     ->first();
-            }
+
             case 'many_many':
-            case 'belongs_many_many': {
+            case 'belongs_many_many':
                 // Get components and extra fields from parent
                 list($relationClass, $componentClass, $parentClass, $componentField, $parentField, $table)
                     = $remote->getSchema()->manyManyComponent($remoteClass, $remoteRelation);
@@ -1819,10 +1819,9 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
                 return $result
                     ->setDataQueryParam($this->getInheritableQueryParams())
                     ->forForeignID($this->ID);
-            }
-            default: {
+
+            default:
                 return null;
-            }
         }
     }
 

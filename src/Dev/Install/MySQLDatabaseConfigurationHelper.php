@@ -38,12 +38,13 @@ class MySQLDatabaseConfigurationHelper implements DatabaseConfigurationHelper
                     if ($conn && empty($conn->connect_errno)) {
                         $conn->query("SET sql_mode = 'ANSI'");
                         return $conn;
-                    } else {
-                        $error = ($conn->connect_errno)
-                            ? $conn->connect_error
-                            : 'Unknown connection error';
-                        return null;
                     }
+
+                    $error = ($conn->connect_errno)
+                        ? $conn->connect_error
+                        : 'Unknown connection error';
+                    return null;
+
                 case 'MySQLPDODatabase':
                     // May throw a PDOException if fails
                     $conn = @new PDO(
@@ -54,10 +55,11 @@ class MySQLDatabaseConfigurationHelper implements DatabaseConfigurationHelper
                     if ($conn) {
                         $conn->query("SET sql_mode = 'ANSI'");
                         return $conn;
-                    } else {
-                        $error = 'Unknown connection error';
-                        return null;
                     }
+
+                    $error = 'Unknown connection error';
+                    return null;
+
                 default:
                     $error = 'Invalid connection type: ' . $databaseConfig['type'];
                     return null;
