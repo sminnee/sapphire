@@ -10,22 +10,22 @@ class ManifestCache_APC implements ManifestCache
 {
     protected $pre;
 
-    function __construct($name)
+    public function __construct($name)
     {
         $this->pre = $name;
     }
 
-    function load($key)
+    public function load($key)
     {
         return apc_fetch($this->pre . $key);
     }
 
-    function save($data, $key)
+    public function save($data, $key)
     {
         apc_store($this->pre . $key, $data);
     }
 
-    function clear()
+    public function clear()
     {
     }
 }

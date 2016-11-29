@@ -10,7 +10,7 @@ class ManifestCache_File implements ManifestCache
 
     protected $folder = null;
 
-    function __construct($name)
+    public function __construct($name)
     {
         $this->folder = TEMP_FOLDER . DIRECTORY_SEPARATOR . $name;
         if (!is_dir($this->folder)) {
@@ -18,19 +18,19 @@ class ManifestCache_File implements ManifestCache
         }
     }
 
-    function load($key)
+    public function load($key)
     {
         $file = $this->folder . DIRECTORY_SEPARATOR . 'cache_' . $key;
         return file_exists($file) ? unserialize(file_get_contents($file)) : null;
     }
 
-    function save($data, $key)
+    public function save($data, $key)
     {
         $file = $this->folder . DIRECTORY_SEPARATOR . 'cache_' . $key;
         file_put_contents($file, serialize($data));
     }
 
-    function clear()
+    public function clear()
     {
         array_map('unlink', glob($this->folder . DIRECTORY_SEPARATOR . 'cache_*'));
     }

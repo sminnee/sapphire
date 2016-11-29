@@ -196,7 +196,7 @@ abstract class DBSchemaManager
      *
      * @return boolean
      */
-    function isSchemaUpdating()
+    public function isSchemaUpdating()
     {
         return $this->schemaIsUpdating;
     }

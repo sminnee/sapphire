@@ -60,7 +60,7 @@ class DateField_View_JQuery extends Object
      * Check if jQuery UI locale settings exists for the current locale
      * @return boolean
      */
-    function regionalSettingsExist()
+    public function regionalSettingsExist()
     {
         $lang = $this->getLang();
         $localeFile = THIRDPARTY_DIR . "/jquery-ui/datepicker/i18n/jquery.ui.datepicker-{$lang}.js";

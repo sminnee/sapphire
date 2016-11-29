@@ -9,7 +9,6 @@
 		<exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />
 		<exclude name="PSR2.Classes.PropertyDeclaration" />
 		<exclude name="PSR2.Methods.MethodDeclaration.Underscore" />
-		<exclude name="Squiz.Scope.MethodScope" />
 		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
 	</rule>

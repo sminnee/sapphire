@@ -52,7 +52,7 @@ class HiddenField extends FormField
         );
     }
 
-    function SmallFieldHolder($properties = array())
+    public function SmallFieldHolder($properties = array())
     {
         return $this->FieldHolder($properties);
     }

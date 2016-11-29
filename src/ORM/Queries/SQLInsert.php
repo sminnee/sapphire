@@ -1,4 +1,4 @@
-<?php
+f<?php
 
 namespace SilverStripe\ORM\Queries;
 
@@ -43,7 +43,7 @@ class SQLInsert extends SQLExpression implements SQLWriteExpression
      * @param string $into Table name to insert into (ANSI quoted)
      * @param array $assignments List of column assignments
      */
-    function __construct($into = null, $assignments = array())
+    public function __construct($into = null, $assignments = array())
     {
         $this->setInto($into);
         if (!empty($assignments)) {

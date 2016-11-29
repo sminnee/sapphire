@@ -15,12 +15,12 @@ class MonologErrorHandler
     /**
      * Set the PSR-3 logger to send errors & exceptions to
      */
-    function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
-    function start()
+    public function start()
     {
         if (!$this->logger) {
             throw new \InvalidArgumentException("No Logger property passed to MonologErrorHandler."
