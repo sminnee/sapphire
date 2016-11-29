@@ -166,7 +166,7 @@ class ManyManyThroughQueryManipulator implements DataQueryManipulator
      * @param array $queriedColumns
      * @param SQLSelect $sqlSelect
      */
-    public function beforeGetFinalisedQuery(DataQuery $dataQuery, $queriedColumns = [], SQLSelect $sqlSelect)
+    public function beforeGetFinalisedQuery(DataQuery $dataQuery, $queriedColumns, SQLSelect $sqlSelect)
     {
         // Get metadata and SQL from join table
         $hasManyRelation = $this->getParentRelationship($dataQuery);
@@ -214,7 +214,7 @@ class ManyManyThroughQueryManipulator implements DataQueryManipulator
      * @param array $queriedColumns
      * @param SQLSelect $sqlQuery
      */
-    public function afterGetFinalisedQuery(DataQuery $dataQuery, $queriedColumns = [], SQLSelect $sqlQuery)
+    public function afterGetFinalisedQuery(DataQuery $dataQuery, $queriedColumns, SQLSelect $sqlQuery)
     {
         // Inject final replacement after manipulation has been performed on the base dataquery
         $joinTableSQL = $dataQuery->getQueryParam('Foreign.JoinTableSQL');

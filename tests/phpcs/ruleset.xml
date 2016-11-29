@@ -12,7 +12,6 @@
 		<exclude name="Squiz.Scope.MethodScope" />
 		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
 		<exclude name="Generic.Files.LineLength.TooLong" />
-		<exclude name="PEAR.Functions.ValidDefaultValue.NotAtEnd" />
 	</rule>
 
 	<!-- PHP-PEG generated file not intended for human consumption -->
