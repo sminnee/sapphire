@@ -110,7 +110,11 @@ class File extends DataObject implements ShortcodeHandler, AssetContainer, Thumb
      * @config
      * @var array
      */
-    private static $non_live_permissions = array('CMS_ACCESS_LeftAndMain', 'CMS_ACCESS_AssetAdmin', 'VIEW_DRAFT_CONTENT');
+    private static $non_live_permissions = array(
+        'CMS_ACCESS_LeftAndMain',
+        'CMS_ACCESS_AssetAdmin',
+        'VIEW_DRAFT_CONTENT'
+    );
 
     private static $db = array(
         "Name" => "Varchar(255)",

@@ -79,7 +79,12 @@ class IPUtils
             $netmask = 32;
         }
 
-        return 0 === substr_compare(sprintf('%032b', ip2long($requestIP)), sprintf('%032b', ip2long($address)), 0, $netmask);
+        return 0 === substr_compare(
+            sprintf('%032b', ip2long($requestIP)),
+            sprintf('%032b', ip2long($address)),
+            0,
+            $netmask
+        );
     }
     /**
      * Compares two IPv6 addresses.
@@ -99,7 +104,9 @@ class IPUtils
     public static function checkIP6($requestIP, $ip)
     {
         if (!((extension_loaded('sockets') && defined('AF_INET6')) || @inet_pton('::1'))) {
-            throw new \RuntimeException('Unable to check IPv6. Check that PHP was not compiled with option "disable-ipv6".');
+            throw new \RuntimeException(
+                'Unable to check IPv6. Check that PHP was not compiled with option "disable-ipv6".'
+            );
         }
 
         if (false !== strpos($ip, '/')) {

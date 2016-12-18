@@ -10,7 +10,6 @@
 		<exclude name="PSR2.Classes.PropertyDeclaration" />
 		<exclude name="PSR2.Methods.MethodDeclaration.Underscore" />
 		<exclude name="Squiz.Classes.ValidClassName.NotCamelCaps" />
-		<exclude name="Generic.Files.LineLength.TooLong" />
 	</rule>
 
 	<!-- PHP-PEG generated file not intended for human consumption -->

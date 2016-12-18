@@ -781,7 +781,9 @@ class HTTPRequest implements ArrayAccess
             }
         }
 
-        if ($headerOverrideIP && filter_var($headerOverrideIP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if ($headerOverrideIP &&
+            filter_var($headerOverrideIP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)
+        ) {
             return $this->getIPFromHeaderValue($headerOverrideIP);
         } elseif (isset($_SERVER['REMOTE_ADDR'])) {
             return $_SERVER['REMOTE_ADDR'];

@@ -171,7 +171,8 @@ trait ImageManipulation
     private static $asset_preview_height = 336;
 
     /**
-     * Fit image to specified dimensions and fill leftover space with a solid colour (default white). Use in templates with $Pad.
+     * Fit image to specified dimensions and fill leftover space with a solid colour (default white). Use in
+     * templates with $Pad.
      *
      * @param integer $width The width to size to
      * @param integer $height The height to size to

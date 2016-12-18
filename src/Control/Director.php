@@ -371,7 +371,8 @@ class Director implements TemplateGlobalProvider
         // Pre-request filtering
         // @see issue #2517
         $model = DataModel::inst();
-        $output = Injector::inst()->get('SilverStripe\\Control\\RequestProcessor')->preRequest($request, $session, $model);
+        $output = Injector::inst()->get(RequestProcessor::class)->preRequest($request, $session, $model);
+
         if ($output === false) {
             $onCleanup();
             throw new HTTPResponse_Exception(_t('Director.INVALID_REQUEST', 'Invalid request'), 400);
@@ -391,7 +392,8 @@ class Director implements TemplateGlobalProvider
             }
         }
 
-        $output = Injector::inst()->get('SilverStripe\\Control\\RequestProcessor')->postRequest($request, $result, $model);
+        $output = Injector::inst()->get(RequestProcessor::class)->postRequest($request, $result, $model);
+
         if ($output === false) {
             $onCleanup();
             throw new HTTPResponse_Exception("Invalid response");

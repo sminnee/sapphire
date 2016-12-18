@@ -203,7 +203,8 @@ class Email extends ViewableData
      *
      * @param string $data The raw file data (not encoded).
      * @param string $attachedFilename Name of the file that should appear once it's sent as a separate attachment.
-     * @param string|null $mimeType MIME type to use when attaching file. If not provided, will attempt to infer via HTTP::get_mime_type().
+     * @param string|null $mimeType MIME type to use when attaching file. If not provided, will attempt to infer via
+     *                              HTTP::get_mime_type().
      * @return $this
      */
     public function attachFileFromString($data, $attachedFilename, $mimeType = null)
@@ -221,7 +222,8 @@ class Email extends ViewableData
      *
      * @param string $filename Relative or full path to file you wish to attach to this email message.
      * @param string|null $attachedFilename Name of the file that should appear once it's sent as a separate attachment.
-     * @param string|null $mimeType MIME type to use when attaching file. If not provided, will attempt to infer via HTTP::get_mime_type().
+     * @param string|null $mimeType MIME type to use when attaching file. If not provided, will attempt to infer via
+     *                              HTTP::get_mime_type().
      * @return $this
      */
     public function attachFile($filename, $attachedFilename = null, $mimeType = null)
@@ -359,7 +361,8 @@ class Email extends ViewableData
     }
 
     /**
-     * Add a custom header to this email message. Useful for implementing all those cool features that we didn't think of.
+     * Add a custom header to this email message. Useful for implementing all those cool features that we didn't
+     * think of.
      *
      * IMPORTANT: If the specified header already exists, the provided value will be appended!
      *

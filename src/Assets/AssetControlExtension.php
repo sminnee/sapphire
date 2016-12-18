@@ -239,7 +239,8 @@ class AssetControlExtension extends DataExtension
      */
     protected function isVersioned()
     {
-        return $this->owner->has_extension('SilverStripe\\ORM\\Versioning\\Versioned') && class_exists('SilverStripe\\ORM\\Versioning\\Versioned');
+        return $this->owner->has_extension('SilverStripe\\ORM\\Versioning\\Versioned')
+            && class_exists('SilverStripe\\ORM\\Versioning\\Versioned');
     }
 
     /**
