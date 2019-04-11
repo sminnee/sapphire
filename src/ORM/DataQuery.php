@@ -1152,7 +1152,25 @@ class DataQuery
         $query->selectField($fieldExpression, $field);
         $this->ensureSelectContainsOrderbyColumns($query, $originalSelect);
 
-        return $query->execute()->column($field);
+        return $this->columnQuery($field)->execute()->column($field);
+    }
+
+    /**
+     * Query the given field column from the database and return as a SQLSelect
+     *
+     * @param string $field See {@link expressionForField()}.
+     * @return SQLSelect The query to return a column
+     */
+    public function columnQuery($field = 'ID')
+    {
+        $fieldExpression = $this->expressionForField($field);
+        $query = $this->getFinalisedQuery(array($field));
+        $originalSelect = $query->getSelect();
+        $query->setSelect(array());
+        $query->selectField($fieldExpression, $field);
+        $this->ensureSelectContainsOrderbyColumns($query, $originalSelect);
+
+        return $query;
     }
 
     /**

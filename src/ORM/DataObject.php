@@ -3454,11 +3454,28 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
      */
     public function requireDefaultRecords()
     {
-        $defaultRecords = $this->config()->uninherited('default_records');
+        $schema = static::getSchema();
 
-        if (!empty($defaultRecords)) {
-            $hasData = DataObject::get_one(static::class);
-            if (!$hasData) {
+        // Check if we have records
+        $hasData = (static::get()->count() > 0);
+
+        if (!$hasData) {
+            // Subclass tables should populate based on parent classes
+            $isSubclassTable = $schema->databaseFields(static::class, false)
+                && get_parent_class(static::class) !== DataObject::class;
+
+            if ($isSubclassTable) {
+                $tableName = $schema->tableName(static::class);
+
+            INSERT INTO "" (\"ID\")
+
+            //echo "INSERT INTO $table (ID) " . Page::get()->dataQuery()->getFinalisedQuery("ID")->sql();
+            }
+
+
+            // Default records
+            $defaultRecords = $this->config()->uninherited('default_records');
+            if (!empty($defaultRecords)) {
                 $className = static::class;
                 foreach ($defaultRecords as $record) {
                     $obj = Injector::inst()->create($className, $record);
