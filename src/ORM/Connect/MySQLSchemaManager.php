@@ -469,7 +469,7 @@ class MySQLSchemaManager extends DBSchemaManager
             $decs = strpos($precision, ',') !== false
                     ? (int) substr($precision, strpos($precision, ',') + 1)
                     : 0;
-            $values['default'] = number_format($values['default'], $decs, '.', '');
+            $values['default'] = number_format((float)$values['default'], $decs, '.', '');
         } else {
             unset($values['default']);
         }

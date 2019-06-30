@@ -156,7 +156,9 @@ class HTTPRequest implements ArrayAccess
      */
     public function __construct($httpMethod, $url, $getVars = array(), $postVars = array(), $body = null)
     {
-        $this->httpMethod = strtoupper(self::detect_method($httpMethod, $postVars));
+        if ($method = self::detect_method($httpMethod, $postVars)) {
+            $this->httpMethod = strtoupper($method);
+        }
         $this->setUrl($url);
         $this->getVars = (array) $getVars;
         $this->postVars = (array) $postVars;

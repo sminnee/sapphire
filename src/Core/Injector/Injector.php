@@ -419,7 +419,7 @@ class Injector implements ContainerInterface
             }
 
             // okay, actually include it now we know we're going to use it
-            if (file_exists($file)) {
+            if ($file && file_exists($file)) {
                 require_once $file;
             }
 
@@ -524,7 +524,7 @@ class Injector implements ContainerInterface
         }
 
         // Evaluate constants surrounded by back ticks
-        if (preg_match('/^`(?<name>[^`]+)`$/', $value, $matches)) {
+        if (is_string($value) && preg_match('/^`(?<name>[^`]+)`$/', $value, $matches)) {
             $envValue = Environment::getEnv($matches['name']);
             if ($envValue !== false) {
                 $value = $envValue;

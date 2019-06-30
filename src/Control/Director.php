@@ -642,9 +642,11 @@ class Director implements TemplateGlobalProvider
         // Check default_base_url
         if ($baseURL = self::config()->uninherited('default_base_url')) {
             $baseURL = Injector::inst()->convertServiceProperty($baseURL);
-            $protocol = parse_url($baseURL, PHP_URL_SCHEME);
-            if ($protocol) {
-                return $protocol === 'https';
+            if ($baseURL) {
+                $protocol = parse_url($baseURL, PHP_URL_SCHEME);
+                if ($protocol) {
+                    return $protocol === 'https';
+                }
             }
         }
 
@@ -807,6 +809,10 @@ class Director implements TemplateGlobalProvider
      */
     public static function is_absolute_url($url)
     {
+        if (!$url) {
+            return false;
+        }
+
         // Strip off the query and fragment parts of the URL before checking
         if (($queryPosition = strpos($url, '?')) !== false) {
             $url = substr($url, 0, $queryPosition - 1);

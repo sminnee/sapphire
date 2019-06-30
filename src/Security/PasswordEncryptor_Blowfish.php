@@ -45,6 +45,10 @@ class PasswordEncryptor_Blowfish extends PasswordEncryptor
 
     public function encrypt($password, $salt = null, $member = null)
     {
+        if (!$password) {
+            return null;
+        }
+
         // See: http://nz.php.net/security/crypt_blowfish.php
         // There are three version of the algorithm - y, a and x, in order
         // of decreasing security. Attempt to use the strongest version.
@@ -167,6 +171,10 @@ class PasswordEncryptor_Blowfish extends PasswordEncryptor
 
     public function check($hash, $password, $salt = null, $member = null)
     {
+        if (!$password) {
+            return false;
+        }
+
         if (strpos($hash, '$2y$') === 0) {
             return $hash === $this->encryptY($password, $salt);
         } elseif (strpos($hash, '$2a$') === 0) {

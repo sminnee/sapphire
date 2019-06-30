@@ -109,8 +109,8 @@ class MySQLiConnector extends DBConnector
             $parameters['server'],
             $parameters['username'],
             $parameters['password'],
-            $selectedDB,
-            !empty($parameters['port']) ? $parameters['port'] : ini_get("mysqli.default_port")
+            (string)$selectedDB,
+            !empty($parameters['port']) ? (int)$parameters['port'] : (int)ini_get("mysqli.default_port")
         );
 
         if ($this->dbConn->connect_error) {

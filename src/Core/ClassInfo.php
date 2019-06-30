@@ -366,7 +366,11 @@ class ClassInfo
             }
         }
 
-        return strtolower(self::$_cache_methods[$lClass][$lMethod]) === $lCompclass;
+        if (self::$_cache_methods[$lClass][$lMethod]) {
+            return strtolower(self::$_cache_methods[$lClass][$lMethod]) === $lCompclass;
+        }
+
+        return false;
     }
 
     /**

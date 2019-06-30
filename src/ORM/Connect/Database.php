@@ -271,7 +271,7 @@ abstract class Database
      */
     public function quoteString($value)
     {
-        return $this->connector->quoteString($value);
+        return $this->connector->quoteString((string)$value);
     }
 
     /**

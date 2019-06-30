@@ -576,7 +576,7 @@ class DBDate extends DBField
             return null;
         }
         // Validate date
-        if (!checkdate($month, $day, $year)) {
+        if (!checkdate((int)$month, (int)$day, (int)$year)) {
             throw new InvalidArgumentException(
                 "Invalid date: '$value'. Use " . self::ISO_DATE . " to prevent this error."
             );
