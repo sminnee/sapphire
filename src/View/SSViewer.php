@@ -66,7 +66,7 @@ class SSViewer implements Flushable
     /**
      * Overridden value of $themes config
      *
-     * @var array
+     * @var array|null
      */
     protected static $current_themes = null;
 
@@ -280,7 +280,7 @@ class SSViewer implements Flushable
 
         // Explicit list is assigned
         $themes = static::$current_themes;
-        if (!isset($themes)) {
+        if ($themes !== null) {
             $themes = SSViewer::config()->uninherited('themes');
         }
         if ($themes) {
