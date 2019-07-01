@@ -635,7 +635,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
     public function getObsoleteClassName()
     {
         $className = $this->getField("ClassName");
-        if (!ClassInfo::exists($className)) {
+        if ($className && !ClassInfo::exists($className)) {
             return $className;
         }
         return null;

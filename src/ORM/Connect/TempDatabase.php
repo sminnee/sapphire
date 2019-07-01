@@ -49,6 +49,10 @@ class TempDatabase
      */
     protected function isDBTemp($name)
     {
+        if (!$name) {
+            return false;
+        }
+
         $prefix = Environment::getEnv('SS_DATABASE_PREFIX') ?: 'ss_';
         $result = preg_match(
             sprintf('/^%stmpdb_[0-9]+_[0-9]+$/i', preg_quote($prefix, '/')),

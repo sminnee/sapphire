@@ -505,7 +505,7 @@ abstract class DBField extends ViewableData implements DBIndexable
      */
     public function XML()
     {
-        return Convert::raw2xml($this->RAW());
+        return Convert::raw2xml((string)$this->RAW());
     }
 
     /**

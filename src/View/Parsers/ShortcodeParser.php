@@ -525,7 +525,7 @@ class ShortcodeParser
                 !in_array(strtolower($parent->tagName), self::$block_level_elements)
             );
 
-            $node->setAttribute('data-parentid', count($parents));
+            $node->setAttribute('data-parentid', (string)count($parents));
             $parents[] = $parent;
         }
 

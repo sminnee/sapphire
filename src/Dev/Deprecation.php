@@ -181,10 +181,10 @@ class Deprecation
         $backtrace = null;
 
         // If you pass #.#, assume #.#.0
-        if (preg_match('/^[0-9]+\.[0-9]+$/', $atVersion)) {
+        if ($atVersion && preg_match('/^[0-9]+\.[0-9]+$/', $atVersion)) {
             $atVersion .= '.0';
         }
-        if (preg_match('/^[0-9]+\.[0-9]+$/', $checkVersion)) {
+        if ($checkVersion && preg_match('/^[0-9]+\.[0-9]+$/', $checkVersion)) {
             $checkVersion .= '.0';
         }
 

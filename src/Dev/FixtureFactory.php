@@ -251,12 +251,12 @@ class FixtureFactory
      * Parse a value from a fixture file.  If it starts with =>
      * it will get an ID from the fixture dictionary
      *
-     * @param string $value
+     * @param string|int|float|bool $value
      * @return string Fixture database ID, or the original value
      */
     protected function parseValue($value)
     {
-        if (substr($value, 0, 2) == '=>') {
+        if (is_string($value) && substr($value, 0, 2) == '=>') {
             // Parse a dictionary reference - used to set foreign keys
             if (strpos($value, '.') !== false) {
                 list($class, $identifier) = explode('.', substr($value, 2), 2);

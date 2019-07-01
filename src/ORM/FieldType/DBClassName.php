@@ -94,11 +94,15 @@ class DBClassName extends DBEnum
         if ($this->record) {
             return $schema->baseDataClass($this->record);
         }
+
         // During dev/build only the table is assigned
-        $tableClass = $schema->tableClass($this->getTable());
-        if ($tableClass && ($baseClass = $schema->baseDataClass($tableClass))) {
-            return $baseClass;
+        if ($table = $this->getTable()) {
+            $tableClass = $schema->tableClass($table);
+            if ($tableClass && ($baseClass = $schema->baseDataClass($tableClass))) {
+                return $baseClass;
+            }
         }
+
         // Fallback to global default
         return DataObject::class;
     }

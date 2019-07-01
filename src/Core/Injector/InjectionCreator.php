@@ -16,7 +16,7 @@ class InjectionCreator implements Factory
         try {
             $reflector = new ReflectionClass($class);
         } catch (ReflectionException $e) {
-            throw new InjectorNotFoundException($e);
+            throw new InjectorNotFoundException($e->getMessage(), 0, $e);
         }
 
         if (count($params)) {

@@ -149,12 +149,12 @@ class NumericField extends TextField
     /**
      * Helper to cast non-localised strings to their native type
      *
-     * @param string $value
+     * @param string|float|int $value
      * @return float|int
      */
     protected function cast($value)
     {
-        if (strlen($value) === 0) {
+        if (is_string($value) && strlen($value) === 0) {
             return null;
         }
         if ($this->getScale() === 0) {

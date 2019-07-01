@@ -316,7 +316,7 @@ class FixtureBlueprint
      * Parse a value from a fixture file.  If it starts with =>
      * it will get an ID from the fixture dictionary
      *
-     * @param string $value
+     * @param string|int|float|bool $value
      * @param array $fixtures See {@link createObject()}
      * @param string $class If the value parsed is a class relation, this parameter
      * will be given the value of that class's name
@@ -324,7 +324,7 @@ class FixtureBlueprint
      */
     protected function parseValue($value, $fixtures = null, &$class = null)
     {
-        if (substr($value, 0, 2) == '=>') {
+        if (is_string($value) && substr($value, 0, 2) == '=>') {
             // Parse a dictionary reference - used to set foreign keys
             list($class, $identifier) = explode('.', substr($value, 2), 2);
 

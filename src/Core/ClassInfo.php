@@ -76,6 +76,10 @@ class ClassInfo
      */
     public static function exists($class)
     {
+        if (!$class) {
+            return false;
+        }
+
         return class_exists($class, false)
             || interface_exists($class, false)
             || ClassLoader::inst()->getItemPath($class);

@@ -94,7 +94,7 @@ abstract class DBString extends DBField
     public function prepValueForDB($value)
     {
         // Cast non-empty value
-        if (is_scalar($value) && strlen($value)) {
+        if (is_scalar($value) && strlen((string)$value)) {
             return (string)$value;
         }
 

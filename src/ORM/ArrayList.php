@@ -549,7 +549,8 @@ class ArrayList extends ViewableData implements SS_List, Filterable, Sortable, L
             $sortDirection[$column] = $direction;
             // We need to subtract every value into a temporary array for sorting
             foreach ($this->items as $index => $item) {
-                $values[$column][] = strtolower($this->extractValue($item, $column));
+                $value = $this->extractValue($item, $column);
+                $values[$column][] = is_string($value) ? strtolower($value) : $value;
             }
             // PHP 5.3 requires below arguments to be reference when using array_multisort together
             // with call_user_func_array

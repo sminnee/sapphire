@@ -59,7 +59,9 @@ class DBCurrency extends DBDecimal
     public function setValue($value, $record = null, $markChanged = true)
     {
         $matches = null;
-        if (is_numeric($value)) {
+        if (!$value) {
+            $this->value = 0;
+        } elseif (is_numeric($value)) {
             $this->value = $value;
         } elseif (preg_match('/-?\$?[0-9,]+(.[0-9]+)?([Ee][0-9]+)?/', $value, $matches)) {
             $this->value = str_replace(['$', ',', $this->config()->currency_symbol], '', $matches[0]);

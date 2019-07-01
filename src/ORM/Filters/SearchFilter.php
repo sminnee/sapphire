@@ -90,8 +90,10 @@ abstract class SearchFilter
         $this->fullName = $fullName;
 
         // sets $this->name and $this->relation
-        $this->addRelation($fullName);
-        $this->addAggregate($fullName);
+        if ($fullName) {
+            $this->addRelation($fullName);
+            $this->addAggregate($fullName);
+        }
         $this->value = $value;
         $this->setModifiers($modifiers);
     }
