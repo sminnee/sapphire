@@ -334,7 +334,7 @@ class Session
                 session_cache_limiter(null);
             }
 
-            if (isset($_SESSION)) {
+            if ($_SESSION !== null) {
                 // Initialise data from session store if present
                 $data = $_SESSION;
 

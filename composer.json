@@ -56,7 +56,9 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "sminnee/phpunit-mock-objects": "^3.4.5",
-        "silverstripe/versioned": "^1"
+        "silverstripe/versioned": "^1",
+        "symbiote/silverstripe-phpstan": "dev-phpstan011",
+        "phpstan/phpstan-shim": "^0.11"
     },
     "provide": {
         "psr/container-implementation": "1.0.0"
@@ -108,5 +110,11 @@
         "php-peg": "php thirdparty/php-peg/cli.php src/View/SSTemplateParser.peg > src/View/SSTemplateParser.php"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sminnee/silverstripe-phpstan.git"
+        }
+    ]
 }
