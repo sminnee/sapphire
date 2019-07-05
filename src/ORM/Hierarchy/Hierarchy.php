@@ -353,7 +353,7 @@ class Hierarchy extends DataExtension
             return;
         }
 
-        /** @var Versioned|DataObject $singleton */
+        /** @var DataObject&Hierarchy $dummyObject */
         $dummyObject = DataObject::singleton($baseClass);
         $baseTable = $dummyObject->baseTable();
 

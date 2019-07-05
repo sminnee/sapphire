@@ -470,6 +470,7 @@ class ShortcodeParser
         $parser = $this;
 
         for ($i = 0; $i < $attributes->length; $i++) {
+            /** @var \DOMAttr $node */
             $node = $attributes->item($i);
             $tags = $this->extractTags($node->nodeValue);
             $extra = array('node' => $node, 'element' => $node->ownerElement);

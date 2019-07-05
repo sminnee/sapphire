@@ -136,6 +136,9 @@ class ConfirmedPasswordField extends FormField
         $titleConfirmField = null
     ) {
 
+        // This param is requested only for backward compat
+        $form;
+
         // Set field title
         $title = isset($title) ? $title : _t('SilverStripe\\Security\\Member.PASSWORD', 'Password');
 

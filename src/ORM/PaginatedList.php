@@ -215,6 +215,7 @@ class PaginatedList extends ListDecorator
     {
         $pageLength = $this->getPageLength();
         if ($this->limitItems && $pageLength) {
+            /** @var SS_List&Limitable $tmptList */
             $tmptList = clone $this->list;
             return new IteratorIterator(
                 $tmptList->limit($pageLength, $this->getPageStart())

@@ -310,6 +310,7 @@ class HTMLEditorSanitiser
                 $children = $el->attributes;
                 $i = $children->length;
                 while ($i--) {
+                    /** @var DOMAttr */
                     $attr = $children->item($i);
                     $attributeRule = $this->getRuleForAttribute($elementRule, $attr->name);
 

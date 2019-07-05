@@ -331,7 +331,7 @@ class Group extends DataObject
         // Now set all children groups as a new foreign key
         $familyIDs = $this->collateFamilyIDs();
         $result = $result->forForeignID($familyIDs);
-        
+
         return $result->where($filter);
     }
 
@@ -625,7 +625,9 @@ class Group extends DataObject
      */
     public function AllChildrenIncludingDeleted()
     {
-        $children = parent::AllChildrenIncludingDeleted();
+        /** @var Hierarchy */
+        $hierarchy = $this->getExtensionInstance(Hierarchy::class);
+        $children = $hierarchy->AllChildrenIncludingDeleted();
 
         $filteredChildren = new ArrayList();
 

@@ -6,6 +6,7 @@ use SilverStripe\Forms\LiteralField;
 use SilverStripe\ORM\DataObjectSchema;
 use SilverStripe\ORM\Sortable;
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\ArrayData;
@@ -111,11 +112,11 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
      */
     public function getHTMLFragments($gridField)
     {
+        /** @var DataList|ArrayList $list */
         $list = $gridField->getList();
         if (!$this->checkDataType($list)) {
             return null;
         }
-        /** @var Sortable $list */
         $forTemplate = new ArrayData(array());
         $forTemplate->Fields = new ArrayList;
 
@@ -188,6 +189,7 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
                 }
             } else {
                 if ($currentColumn == count($columns)) {
+                    /** @var GridFieldFilterHeader */
                     $filter = $gridField->getConfig()->getComponentByType(GridFieldFilterHeader::class);
 
                     if ($filter && $filter->useLegacyFilterHeader && $filter->canFilterAnyColumns($gridField)) {

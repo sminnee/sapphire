@@ -9,6 +9,7 @@ use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\ORM\Limitable;
 use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
@@ -216,6 +217,7 @@ class GridFieldPrintButton implements GridField_HTMLProvider, GridField_ActionPr
             }
         }
 
+        /** @var Limitable */
         $items = $gridField->getManipulatedList();
         $itemRows = new ArrayList();
 

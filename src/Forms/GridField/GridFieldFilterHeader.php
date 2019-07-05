@@ -217,6 +217,7 @@ class GridFieldFilterHeader implements GridField_URLHandler, GridField_HTMLProvi
      */
     public function canFilterAnyColumns($gridField)
     {
+        /** @var Filterable&SS_List */
         $list = $gridField->getList();
 
         if (!$this->checkDataType($list)) {
@@ -407,6 +408,7 @@ class GridFieldFilterHeader implements GridField_URLHandler, GridField_HTMLProvi
     {
         Deprecation::notice('5.0', 'Table row based filter header will be removed in favor of search field in 5.0');
 
+        /** @var SS_List&Filterable */
         $list = $gridField->getList();
         if (!$this->checkDataType($list)) {
             return null;
