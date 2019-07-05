@@ -12,14 +12,13 @@ class TimeField_Readonly extends TimeField
 
     protected $readonly = true;
 
+
+    private $valueObj = true;
+
     public function Field($properties = array())
     {
-        if ($this->valueObj) {
-            $val = Convert::raw2xml($this->valueObj->toString($this->getConfig('timeformat')));
-        } else {
-            // TODO Localization
-            $val = '<i>(not set)</i>';
-        }
+        $localised = $this->internalToFrontend($this->value);
+        $val = $localised ? Convert::raw2xml($localised) : '<i>(not set)</i>';
 
         return "<span class=\"readonly\" id=\"" . $this->ID() . "\">$val</span>";
     }
