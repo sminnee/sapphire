@@ -1094,13 +1094,11 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
         if ($includeRelations) {
             if ($manyMany = $this->manyMany()) {
                 foreach ($manyMany as $relationship => $class) {
-                    /** @var DataObject $leftComponents */
                     $leftComponents = $leftObj->getManyManyComponents($relationship);
                     $rightComponents = $rightObj->getManyManyComponents($relationship);
                     if ($rightComponents && $rightComponents->exists()) {
                         $leftComponents->addMany($rightComponents->column('ID'));
                     }
-                    $leftComponents->write();
                 }
             }
 
@@ -1111,7 +1109,6 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
                     if ($rightComponents && $rightComponents->exists()) {
                         $leftComponents->addMany($rightComponents->column('ID'));
                     }
-                    $leftComponents->write();
                 }
             }
         }
