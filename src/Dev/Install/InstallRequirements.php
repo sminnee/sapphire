@@ -1067,7 +1067,7 @@ class InstallRequirements
     {
         $this->testing($testDetails);
 
-        if (!isset($_POST)) {
+        if ($_POST === null) {
             $this->error($testDetails);
 
             return false;
