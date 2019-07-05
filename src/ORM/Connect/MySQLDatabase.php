@@ -361,20 +361,6 @@ class MySQLDatabase extends Database implements TransactionManager
         return $result;
     }
 
-    /**
-     * In error condition, set transactionNesting to zero
-     */
-    protected function resetTransactionNesting()
-    {
-        // Check whether to use a connector's built-in transaction methods
-        if ($this->connector instanceof TransactionalDBConnector) {
-            if ($this->transactionNesting > 0) {
-                $this->connector->transactionRollback();
-            }
-        }
-        $this->transactionNesting = 0;
-    }
-
     public function query($sql, $errorLevel = E_USER_ERROR)
     {
         $this->inspectQuery($sql);
@@ -399,7 +385,10 @@ class MySQLDatabase extends Database implements TransactionManager
         // on why we need to be over-eager
         $isDDL = $this->getConnector()->isQueryDDL($sql);
         if ($isDDL) {
-            $this->resetTransactionNesting();
+            $tm = $this->getTransactionManager();
+            if ($tm instanceof NestedTransactionManager) {
+                $tm->resetTransactionNesting();
+            }
         }
     }
 
