@@ -1228,7 +1228,7 @@ class GridField extends FormField
     }
 
     /**
-     * @param $content
+     * @param array $content
      *
      * @return string
      */

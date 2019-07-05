@@ -787,8 +787,8 @@ class SapphireTest extends PHPUnit_Framework_TestCase implements TestOnly
     /**
      * @deprecated 4.0.0:5.0.0 Use assertListNotContains() instead
      *
-     * @param $matches
-     * @param $dataObjectSet
+     * @param SS_List|array $matches
+     * @param SS_List $dataObjectSet
      */
     public static function assertNotDOSContains($matches, $dataObjectSet)
     {

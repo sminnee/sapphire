@@ -1289,7 +1289,7 @@ class Member extends DataObject
      * Use {@link DirectGroups()} to only retrieve the group relations without inheritance.
      *
      * @todo Push all this logic into Member_GroupSet's getIterator()?
-     * @return Member_Groupset
+     * @return Member_GroupSet
      */
     public function Groups()
     {

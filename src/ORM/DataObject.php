@@ -2033,7 +2033,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
      * Returns a many-to-many component, as a ManyManyList.
      * @param string $componentName Name of the many-many component
      * @param int|array $id Optional ID for parent of this relation, if not the current record
-     * @return ManyManyList|UnsavedRelationList The set of components
+     * @return ManyManyList|ManyManyThroughList|UnsavedRelationList The set of components
      */
     public function getManyManyComponents($componentName, $id = null)
     {
@@ -3333,7 +3333,7 @@ class DataObject extends ViewableData implements DataObjectInterface, i18nEntity
 
     /**
      * @see $sourceQueryParams
-     * @param array
+     * @param array $array
      */
     public function setSourceQueryParams($array)
     {

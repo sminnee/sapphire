@@ -32,7 +32,7 @@ class UpgradeBootstrap
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @param $basePath
+     * @param string $basePath
      */
     public function __invoke(InputInterface $input, OutputInterface $output, $basePath)
     {

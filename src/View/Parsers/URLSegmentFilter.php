@@ -141,7 +141,7 @@ class URLSegmentFilter
     protected $allowMultibyte;
 
     /**
-     * @param boolean
+     * @param boolean $bool
      */
     public function setAllowMultibyte($bool)
     {

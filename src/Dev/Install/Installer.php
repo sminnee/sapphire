@@ -281,7 +281,7 @@ PHP;
     /**
      * Write all .env files
      *
-     * @param $config
+     * @param array $config
      */
     protected function writeConfigEnv($config)
     {
@@ -661,7 +661,7 @@ HTML;
     }
 
     /**
-     * @param $config
+     * @param array $config
      */
     protected function sendInstallStats($config)
     {

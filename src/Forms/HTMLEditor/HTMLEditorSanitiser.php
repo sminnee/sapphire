@@ -19,12 +19,12 @@ class HTMLEditorSanitiser
 {
     use Injectable;
 
-    /** @var [stdClass] - $element => $rule hash for whitelist element rules where the element name isn't a pattern */
+    /** @var stdClass $element => $rule hash for whitelist element rules where the element name isn't a pattern */
     protected $elements = array();
-    /** @var [stdClass] - Sequential list of whitelist element rules where the element name is a pattern */
+    /** @var stdClass Sequential list of whitelist element rules where the element name is a pattern */
     protected $elementPatterns = array();
 
-    /** @var [stdClass] - The list of attributes that apply to all further whitelisted elements added */
+    /** @var stdClass The list of attributes that apply to all further whitelisted elements added */
     protected $globalAttributes = array();
 
     /**
@@ -51,8 +51,8 @@ class HTMLEditorSanitiser
     /**
      * Given a TinyMCE pattern (close to unix glob style), create a regex that does the match
      *
-     * @param $str - The TinyMCE pattern
-     * @return string - The equivalent regex
+     * @param string $str The TinyMCE pattern
+     * @return string The equivalent regex
      */
     protected function patternToRegex($str)
     {

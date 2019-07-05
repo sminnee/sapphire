@@ -520,7 +520,7 @@ class FormField extends RequestHandler
     /**
      * Sets the right title for this formfield
      *
-     * @param string|DBField Plain text string, or a DBField with appropriately escaped HTML
+     * @param string|DBField $rightTitle Plain text string, or a DBField with appropriately escaped HTML
      * @return $this
      */
     public function setRightTitle($rightTitle)

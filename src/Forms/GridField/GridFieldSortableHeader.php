@@ -256,7 +256,7 @@ class GridFieldSortableHeader implements GridField_HTMLProvider, GridField_DataM
      * {@link DataQuery} first.
      *
      * @param GridField $gridField
-     * @param SS_List $dataList
+     * @param SS_List&Sortable $dataList
      * @return SS_List
      */
     public function getManipulatedData(GridField $gridField, SS_List $dataList)

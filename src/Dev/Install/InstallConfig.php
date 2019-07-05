@@ -264,7 +264,7 @@ class InstallConfig
     /**
      * Get theme selected
      *
-     * @param $request
+     * @param array $request
      * @return string
      */
     public function getTheme($request)

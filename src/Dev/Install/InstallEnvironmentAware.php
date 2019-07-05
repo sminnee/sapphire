@@ -14,7 +14,7 @@ trait InstallEnvironmentAware
 {
     /**
      * Base path
-     * @var
+     * @var string
      */
     protected $baseDir;
 
