@@ -159,7 +159,7 @@ class FieldList extends ArrayList
             sprintf(
                 "%s() I noticed that a field called '%s' appears twice",
                 $functionName,
-                $field->getName(),
+                $field->getName()
             ),
             E_USER_ERROR
         );
