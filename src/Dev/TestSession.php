@@ -185,6 +185,7 @@ class TestSession
                 if (!$submission) {
                     throw new Exception("Can't find button '$button' to submit as part of test.");
                 }
+                $submission = $submission->_encode();
             } else {
                 $submission = $form->submit();
             }
@@ -192,7 +193,7 @@ class TestSession
             $url = Director::makeRelative($form->getAction()->asString());
 
             $postVars = array();
-            parse_str($submission->_encode(), $postVars);
+            parse_str($submission, $postVars);
             return $this->post($url, $postVars);
         } else {
             user_error("TestSession::submitForm called when there is no form loaded."
