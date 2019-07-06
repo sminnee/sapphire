@@ -132,7 +132,7 @@ class NestedTransactionManager implements TransactionManager
     public function resetTransactionNesting()
     {
         if ($this->transactionNesting > 0) {
-            $this->child->transactionRollback();
+            $this->child->transactionEnd();
         }
         $this->transactionNesting = 0;
     }
