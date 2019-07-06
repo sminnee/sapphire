@@ -345,7 +345,7 @@ class SimpleForm {
      *    Simply submits the form without the submit button
      *    value. Used when there is only one button or it
      *    is unimportant.
-     *    @return hash           Submitted values.
+     *    @return SimpleEncoding           Submitted values.
      *    @access public
      */
     function submit() {

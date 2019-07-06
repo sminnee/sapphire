@@ -187,7 +187,7 @@ class TestSession
                 }
                 $submission = $submission->_encode();
             } else {
-                $submission = $form->submit();
+                $submission = $form->submit()->_encode();
             }
 
             $url = Director::makeRelative($form->getAction()->asString());
