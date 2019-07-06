@@ -19,4 +19,4 @@ parameters:
     - '#class HTMLPurifier not found#'
     - '#unknown class HTMLPurifier#'
     # https://github.com/phpstan/phpstan/issues/1299
-    - 'Variable \$_SESSION in isset\(\) always exists#'
+    - '#Variable \$_SESSION in isset\(\) always exists#'
