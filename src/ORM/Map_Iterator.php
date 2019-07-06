@@ -62,10 +62,13 @@ class Map_Iterator implements Iterator
      */
     public function rewind()
     {
+        $this->items->rewind();
+
         $this->firstItemIdx = 0;
         $this->endItemIdx = null;
 
-        $this->items->rewind();
+        // If this->items is empty, start straight on endItems by setting this to 0 rather than null
+        $this->endItemIdx = $this->items->valid() ? null : 0;
     }
 
     /**
