@@ -135,7 +135,7 @@ class PDOStatementHandle
      * Executes a prepared statement (PDOStatement::execute)
      *
      * @param array $parameters An array of values with as many elements as there are bound parameters in the SQL
-                                statement being executed
+     *                          statement being executed
      * @return bool Returns true on success
      */
     public function execute(array $parameters)
